@@ -38,7 +38,7 @@ export function Header() {
                     href={`/books/danh-muc/${category.slug}`}
                   >
                     <DropdownMenuItem key={category.slug}>
-                      {category.name}
+                      {category.name} ({category.bookCount})
                     </DropdownMenuItem>
                   </Link>
                 );
