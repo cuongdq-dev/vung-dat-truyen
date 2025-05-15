@@ -1,16 +1,18 @@
-import { BookGrid } from "@/components/book-grid"
-import { ChevronLeft } from "lucide-react"
-import Link from "next/link"
-import { getBooks } from "@/lib/api"
-import type { Metadata } from "next"
+import { BookGrid } from "@/components/book-grid";
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
+import { getBooks } from "@/lib/api";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "All Books | Studiall",
   description: "Browse our collection of books",
-}
+};
+
+export const dynamic = "force-dynamic";
 
 export default async function BooksPage() {
-  const books = await getBooks()
+  const books = await getBooks();
 
   return (
     <main className="flex min-h-screen flex-col bg-background text-foreground pb-16 lg:pb-0">
@@ -25,9 +27,9 @@ export default async function BooksPage() {
         </header>
 
         <div className="p-4 lg:p-8">
-          <BookGrid books={books} />
+          <BookGrid books={books?.data!} />
         </div>
       </div>
     </main>
-  )
+  );
 }

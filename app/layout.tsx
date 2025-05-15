@@ -10,11 +10,11 @@ import { BookOpen } from "lucide-react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Studiall - Your Digital Reading Companion",
+  title: "Vùng Đất Truyện - Your Digital Reading Companion",
   description: "Discover, read, and track your favorite books in one place",
   keywords: "books, reading, digital library, ebooks",
   openGraph: {
-    title: "Studiall - Your Digital Reading Companion",
+    title: "Vùng Đất Truyện - Your Digital Reading Companion",
     description: "Discover, read, and track your favorite books in one place",
     type: "website",
   },

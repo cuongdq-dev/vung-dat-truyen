@@ -25,6 +25,8 @@ import { BookOpen, ChevronLeft, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+export const dynamic = "force-dynamic";
+
 export default function BookmarkClientPage() {
   const [bookmarks, setBookmarks] = useState<BookmarkItem[]>([]);
   const { toast } = useToast();

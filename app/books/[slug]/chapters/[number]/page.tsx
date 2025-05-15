@@ -15,6 +15,8 @@ interface ChapterPageProps {
   };
 }
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: ChapterPageProps): Promise<Metadata> {
