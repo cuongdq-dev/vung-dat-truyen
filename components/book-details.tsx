@@ -19,6 +19,7 @@ import { Skeleton } from "./ui/skeleton";
 
 import BookCard from "./ui/book-card";
 import { BookmarkButton } from "./ui/bookmark-button";
+import Link from "next/link";
 
 interface BookDetailsProps {
   book?: Book;
@@ -115,7 +116,14 @@ export function BookDetails({ book, recommence }: BookDetailsProps) {
 
             <div className="flex flex-wrap gap-2 mb-4">
               {book?.categories?.map((category) => {
-                return <Badge key={category?.slug}>{category?.name}</Badge>;
+                return (
+                  <Link
+                    key={category?.slug}
+                    href={"/books/danh-muc/" + category.slug}
+                  >
+                    <Badge>{category?.name}</Badge>
+                  </Link>
+                );
               })}
             </div>
 
@@ -175,8 +183,8 @@ export function BookDetails({ book, recommence }: BookDetailsProps) {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             <BookCard book={book} />
-            {recommence?.map((book) => {
-              return <BookCard key={book.slug} book={book} />;
+            {recommence?.map((book, index) => {
+              return <BookCard key={book.slug + "_" + index} book={book} />;
             })}
           </div>
         </section>

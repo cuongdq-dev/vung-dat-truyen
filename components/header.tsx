@@ -8,11 +8,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Book, ChevronDown } from "lucide-react";
-import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 import { SearchBar } from "./search-bar";
+import { useCategories } from "@/context/CategoriesContext";
+import Link from "next/link";
 
 export function Header() {
+  const categories = useCategories();
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container px-4 py-2 flex h-14 items-center w-full lg:max-w-[70%] flex row justify-between">
@@ -29,13 +31,18 @@ export function Header() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-48">
-              <DropdownMenuItem>Tiểu thuyết</DropdownMenuItem>
-              <DropdownMenuItem>Kỳ ảo</DropdownMenuItem>
-              <DropdownMenuItem>Phiêu lưu</DropdownMenuItem>
-              <DropdownMenuItem>Hành động</DropdownMenuItem>
-              <DropdownMenuItem>Lãng mạn</DropdownMenuItem>
-              <DropdownMenuItem>Kinh dị</DropdownMenuItem>
-              <DropdownMenuItem>Trinh thám</DropdownMenuItem>
+              {categories?.map((category) => {
+                return (
+                  <Link
+                    key={"link_" + category.slug}
+                    href={`/books/danh-muc/${category.slug}`}
+                  >
+                    <DropdownMenuItem key={category.slug}>
+                      {category.name}
+                    </DropdownMenuItem>
+                  </Link>
+                );
+              })}
             </DropdownMenuContent>
           </DropdownMenu>
 

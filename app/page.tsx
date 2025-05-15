@@ -1,7 +1,9 @@
 // "use client";
 import { BookGrid } from "@/components/book-grid";
+import { Categories } from "@/components/categories";
 import { FeaturedBook } from "@/components/featured-book";
 import { Button } from "@/components/ui/button";
+import { useCategories } from "@/context/CategoriesContext";
 import { getHome } from "@/lib/api";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
@@ -10,7 +12,6 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const homeResponse = await getHome();
-
   return (
     <>
       <div className="container py-4 px-4">
@@ -31,6 +32,8 @@ export default async function Home() {
             <BookGrid books={homeResponse?.home?.featureBooks} />
           )}
         </div>
+
+        <Categories />
         <div className="mt-12">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold">Mới Cập Nhật</h2>

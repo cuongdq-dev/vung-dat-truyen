@@ -32,26 +32,20 @@ export default function BookCard({ book }: { book?: Book }) {
           {book?.author?.name}
         </p>
 
-        <div className="mt-2 flex items-center justify-between">
-          {book?.categories && (
-            <Badge variant="outline" className="text-xs">
-              {book?.categories[0]?.name}
-            </Badge>
-          )}
-          <div className="flex items-center gap-1">
-            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-            {/* <span className="text-xs">{rating.toFixed(1)}</span> */}
-          </div>
+        <div className="mt-2 flex">
+          {book?.categories &&
+            book?.categories?.slice(0, 2).map((category) => {
+              return (
+                <Badge
+                  key={category.slug}
+                  variant="outline"
+                  className="text-xs"
+                >
+                  {category?.name}
+                </Badge>
+              );
+            })}
         </div>
-
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute right-1 top-1 h-7 w-7 rounded-full bg-background/80 opacity-0 transition-opacity group-hover:opacity-100"
-        >
-          <Heart className="h-4 w-4" />
-          <span className="sr-only">Yêu thích</span>
-        </Button>
       </div>
     </div>
   );

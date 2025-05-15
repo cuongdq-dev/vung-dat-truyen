@@ -62,8 +62,8 @@ export default function BookCatalogClient({
 
   // Local state for UI
   const [searchQuery, setSearchQuery] = useState(query);
-  const [selectedGenres, setSelectedGenres] = useState<string[]>(genreParams);
-  const [selectedStatus, setSelectedStatus] = useState<string>(status);
+  // const [selectedGenres, setSelectedGenres] = useState<string[]>(genreParams);
+  // const [selectedStatus, setSelectedStatus] = useState<string>(status);
   const [sortBy, setSortBy] = useState<string>(sort);
   const [currentPage, setCurrentPage] = useState(page);
   const [isLoading, setIsLoading] = useState(false);
@@ -120,8 +120,8 @@ export default function BookCatalogClient({
       q: searchQuery,
       page: 1, // Reset to first page on new search
       sort: sortBy,
-      status: selectedStatus,
-      genre: selectedGenres,
+      // status: selectedStatus,
+      // genre: selectedGenres,
     });
   };
 
@@ -133,8 +133,8 @@ export default function BookCatalogClient({
       page,
       q: query,
       sort: sortBy,
-      status: selectedStatus,
-      genre: selectedGenres,
+      // status: selectedStatus,
+      // genre: selectedGenres,
     });
 
     // Scroll to top of the page
@@ -142,13 +142,13 @@ export default function BookCatalogClient({
   };
 
   // Handle genre toggle
-  const handleGenreToggle = (genre: string) => {
-    const newGenres = selectedGenres.includes(genre)
-      ? selectedGenres.filter((g) => g !== genre)
-      : [...selectedGenres, genre];
+  // const handleGenreToggle = (genre: string) => {
+  //   const newGenres = selectedGenres.includes(genre)
+  //     ? selectedGenres.filter((g) => g !== genre)
+  //     : [...selectedGenres, genre];
 
-    setSelectedGenres(newGenres);
-  };
+  //   setSelectedGenres(newGenres);
+  // };
 
   // Apply filters
   const applyFilters = () => {
@@ -156,35 +156,35 @@ export default function BookCatalogClient({
       page: 1, // Reset to first page on filter change
       q: searchQuery,
       sort: sortBy,
-      status: selectedStatus,
-      genre: selectedGenres,
+      // status: selectedStatus,
+      // genre: selectedGenres,
     });
   };
 
   // Remove a specific genre filter
-  const removeGenreFilter = (genre: string) => {
-    const newGenres = selectedGenres.filter((g) => g !== genre);
-    setSelectedGenres(newGenres);
+  // const removeGenreFilter = (genre: string) => {
+  //   const newGenres = selectedGenres.filter((g) => g !== genre);
+  //   setSelectedGenres(newGenres);
 
-    updateUrlParams({
-      page: 1,
-      q: query,
-      sort: sortBy,
-      status: selectedStatus,
-      genre: newGenres,
-    });
-  };
+  //   updateUrlParams({
+  //     page: 1,
+  //     q: query,
+  //     sort: sortBy,
+  //     status: selectedStatus,
+  //     genre: newGenres,
+  //   });
+  // };
 
   // Clear all filters
-  const clearFilters = () => {
-    setSelectedGenres([]);
-    setSelectedStatus("all");
-    setSortBy("newest");
-    setSearchQuery("");
-    setCurrentPage(1);
+  // const clearFilters = () => {
+  //   // setSelectedGenres([]);
+  //   // setSelectedStatus("all");
+  //   setSortBy("newest");
+  //   setSearchQuery("");
+  //   setCurrentPage(1);
 
-    router.push(pathname);
-  };
+  //   router.push(pathname);
+  // };
 
   // Handle sort change
   const handleSortChange = (value: string) => {
@@ -197,26 +197,26 @@ export default function BookCatalogClient({
       page: 1,
       q: query,
       sort: value,
-      status: selectedStatus,
-      genre: selectedGenres,
+      // status: selectedStatus,
+      // genre: selectedGenres,
     });
   };
 
   // Handle status change
-  const handleStatusChange = (value: string) => {
-    // Prevent unnecessary updates if the value hasn't changed
-    if (value === selectedStatus) return;
+  // const handleStatusChange = (value: string) => {
+  //   // Prevent unnecessary updates if the value hasn't changed
+  //   if (value === selectedStatus) return;
 
-    setSelectedStatus(value);
-  };
+  //   setSelectedStatus(value);
+  // };
 
   // Sync local state with URL params when they change externally
   useEffect(() => {
     // Only update if values are different to prevent unnecessary re-renders
     if (searchQuery !== query) setSearchQuery(query);
-    if (JSON.stringify(selectedGenres) !== JSON.stringify(genreParams))
-      setSelectedGenres(genreParams);
-    if (selectedStatus !== status) setSelectedStatus(status);
+    // if (JSON.stringify(selectedGenres) !== JSON.stringify(genreParams))
+    // setSelectedGenres(genreParams);
+    // if (selectedStatus !== status) setSelectedStatus(status);
     if (sortBy !== sort) setSortBy(sort);
     if (currentPage !== page) setCurrentPage(page);
   }, [
@@ -226,8 +226,8 @@ export default function BookCatalogClient({
     sort,
     page,
     searchQuery,
-    selectedGenres,
-    selectedStatus,
+    // selectedGenres,
+    // selectedStatus,
     sortBy,
     currentPage,
   ]);
@@ -270,7 +270,7 @@ export default function BookCatalogClient({
         </div>
 
         <div className="flex items-center gap-2">
-          <Sheet>
+          {/* <Sheet>
             <SheetTrigger asChild>
               <Button
                 variant="outline"
@@ -342,7 +342,7 @@ export default function BookCatalogClient({
                 </SheetClose>
               </SheetFooter>
             </SheetContent>
-          </Sheet>
+          </Sheet> */}
 
           <Select value={sortBy} onValueChange={handleSortChange}>
             <SelectTrigger className="w-[160px]">
@@ -386,8 +386,8 @@ export default function BookCatalogClient({
                 updateUrlParams({
                   page: 1,
                   sort: sortBy,
-                  status: selectedStatus,
-                  genre: selectedGenres,
+                  // status: selectedStatus,
+                  // genre: selectedGenres,
                 });
               }
             }}
@@ -396,53 +396,6 @@ export default function BookCatalogClient({
           </button>
         )}
       </form>
-
-      {/* Active filters display */}
-      {(selectedGenres.length > 0 || selectedStatus !== "all") && (
-        <div className="flex flex-wrap gap-2 mb-4">
-          {selectedGenres.map((genre) => (
-            <Badge
-              key={genre}
-              variant="secondary"
-              className="flex items-center gap-1"
-            >
-              {genre}
-              <button onClick={() => removeGenreFilter(genre)}>
-                <X className="h-3 w-3" />
-              </button>
-            </Badge>
-          ))}
-
-          {selectedStatus !== "all" && (
-            <Badge variant="secondary" className="flex items-center gap-1">
-              {selectedStatus}
-              <button
-                onClick={() => {
-                  setSelectedStatus("all");
-                  updateUrlParams({
-                    page: 1,
-                    q: query,
-                    sort: sortBy,
-                    status: "all",
-                    genre: selectedGenres,
-                  });
-                }}
-              >
-                <X className="h-3 w-3" />
-              </button>
-            </Badge>
-          )}
-
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={clearFilters}
-            className="h-6 px-2"
-          >
-            Xóa tất cả
-          </Button>
-        </div>
-      )}
 
       {/* Results count */}
       <div className="mb-4 text-sm text-muted-foreground">
@@ -455,10 +408,9 @@ export default function BookCatalogClient({
             Không tìm thấy truyện nào
           </h2>
           <p className="text-muted-foreground mb-6">
-            Không có truyện nào phù hợp với bộ lọc hiện tại. Vui lòng thử lại
-            với bộ lọc khác.
+            Không có truyện nào phù hợp với bộ lọc hiện tại. Vui lòng thử lại.
           </p>
-          <Button onClick={clearFilters}>Xóa bộ lọc</Button>
+          {/* <Button onClick={clearFilters}>Xóa bộ lọc</Button> */}
         </div>
       ) : (
         <>

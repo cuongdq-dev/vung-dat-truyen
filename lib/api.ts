@@ -1,5 +1,6 @@
 import type {
   Book,
+  CategoryItem,
   Chapter,
   HomeResponse,
   ListBookResponse,
@@ -11,6 +12,23 @@ import type {
 
 const API_URL = process.env.SITE_API_URL!;
 const AUTH_TOKEN = process.env.SITE_AUTH_TOKEN!;
+
+export async function getCategories(): Promise<CategoryItem[] | undefined> {
+  try {
+    const response = await fetch(`${API_URL}/book/categories`, {
+      headers: {
+        Authorization: `Bearer ${AUTH_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      cache: "no-store", // Đảm bảo SSR
+    });
+    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error("getHome error:", error);
+    return undefined;
+  }
+}
 
 export async function getHome(): Promise<HomeResponse | undefined> {
   try {
@@ -51,6 +69,42 @@ export async function getBooks(params?: {
       },
       cache: "no-store", // Đảm bảo SSR
     });
+    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error("getHome error:", error);
+    return undefined;
+  }
+}
+
+export async function getBooksByCategory(
+  slug: string,
+  params?: {
+    [key: string]: string | string[] | undefined;
+  }
+): Promise<ListBookResponse | undefined> {
+  try {
+    const search = new URLSearchParams();
+
+    for (const key in params) {
+      const value = params[key];
+      if (typeof value === "string") {
+        search.set(key, value);
+      } else if (Array.isArray(value)) {
+        value.forEach((v) => search.append(key, v));
+      }
+    }
+
+    const response = await fetch(
+      `${API_URL}/book/list/category/${slug}?${search.toString()}`,
+      {
+        headers: {
+          Authorization: `Bearer ${AUTH_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        cache: "no-store", // Đảm bảo SSR
+      }
+    );
     if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
     return await response.json();
   } catch (error) {

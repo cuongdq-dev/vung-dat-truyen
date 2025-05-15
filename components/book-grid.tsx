@@ -53,8 +53,12 @@ const books = [
 export function BookGrid({ books }: { books: Book[] }) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
-      {books.map((book) => (
-        <Link key={book.id} href={`/books/${book.slug}`} className="group">
+      {books.map((book, index) => (
+        <Link
+          key={book.slug + "-" + index}
+          href={`/books/${book.slug}`}
+          className="group"
+        >
           <div className="flex flex-col h-full">
             <div className="relative aspect-[2/3] rounded-md overflow-hidden bg-gray-100 dark:bg-gray-800 mb-2">
               <img
@@ -71,7 +75,9 @@ export function BookGrid({ books }: { books: Book[] }) {
             </p>
             <div className="flex items-center gap-1 mt-1">
               <BookOpen className="w-3 h-3" />
-              <span className="text-xs">{book.total_chapter} Chương</span>
+              <span className="text-xs">
+                {book?.total_chapter || book?.chapters?.length} Chương
+              </span>
             </div>
           </div>
         </Link>

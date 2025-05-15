@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Star } from "lucide-react";
 import { Book } from "@/lib/types";
+import { useCategories } from "@/context/CategoriesContext";
 
 export function FeaturedBook({ book }: { book: Book }) {
   return (
@@ -23,13 +24,17 @@ export function FeaturedBook({ book }: { book: Book }) {
           <div className="flex flex-wrap gap-2 mb-6">
             {book?.categories?.map((category) => {
               return (
-                <Badge
+                <Link
                   key={category.slug}
-                  variant="secondary"
-                  className="bg-slate-700 text-white hover:bg-slate-600"
+                  href={`/books/danh-muc/${category.slug}`}
                 >
-                  {category.name}
-                </Badge>
+                  <Badge
+                    variant="secondary"
+                    className="bg-slate-700 text-white hover:bg-slate-600"
+                  >
+                    {category.name}
+                  </Badge>
+                </Link>
               );
             })}
           </div>
