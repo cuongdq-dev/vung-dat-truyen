@@ -46,7 +46,6 @@ export function CollapsibleText({
       <p
         ref={textRef}
         className={cn(
-          "line-clamp-4",
           "whitespace-pre-line text-muted-foreground transition-all duration-200",
           !isExpanded && `line-clamp-${maxLines}`
         )}

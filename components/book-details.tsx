@@ -20,6 +20,7 @@ import { Skeleton } from "./ui/skeleton";
 import BookCard from "./ui/book-card";
 import { BookmarkButton } from "./ui/bookmark-button";
 import Link from "next/link";
+import { AdsenseUnit } from "./ads/ad-unit";
 
 interface BookDetailsProps {
   book?: Book;
@@ -100,7 +101,7 @@ export function BookDetails({ book, recommence }: BookDetailsProps) {
           </div>
         </div>
 
-        <div className="md:col-span-2">
+        <div className="md:col-span-2 mt-6">
           <div className="mb-6">
             <h1 className="text-3xl font-bold mb-2">{book?.title}</h1>
 
@@ -158,6 +159,10 @@ export function BookDetails({ book, recommence }: BookDetailsProps) {
             <div className="mb-8">
               <h3 className="font-medium mb-2">Giới thiệu</h3>
               <CollapsibleText text={book?.description!} />
+            </div>
+
+            <div className="mb-8 max-h-[100px]">
+              <AdsenseUnit />
             </div>
           </div>
 
