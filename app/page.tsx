@@ -39,7 +39,7 @@ export default async function Home() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold">Mới Cập Nhật</h2>
             <Button variant="ghost" size="sm" asChild>
-              <Link href="/latest" className="flex items-center gap-1">
+              <Link href="/books" className="flex items-center gap-1">
                 Xem tất cả
                 <ChevronRight className="h-4 w-4" />
               </Link>
@@ -54,7 +54,7 @@ export default async function Home() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold">Đọc Nhiều Nhất</h2>
             <Button variant="ghost" size="sm" asChild>
-              <Link href="/popular" className="flex items-center gap-1">
+              <Link href="/books" className="flex items-center gap-1">
                 Xem tất cả
                 <ChevronRight className="h-4 w-4" />
               </Link>
