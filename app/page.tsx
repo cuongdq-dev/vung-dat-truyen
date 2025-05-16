@@ -1,10 +1,8 @@
-// "use client";
-import { AdsenseUnit } from "@/components/ads/ad-unit";
+import { BookDetails } from "@/components/book-details";
 import { BookGrid } from "@/components/book-grid";
 import { Categories } from "@/components/categories";
 import { FeaturedBook } from "@/components/featured-book";
 import { Button } from "@/components/ui/button";
-import { useSetting } from "@/context/SettingContext";
 import { getHome } from "@/lib/api";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
@@ -34,9 +32,6 @@ export default async function Home() {
             <BookGrid books={homeResponse?.home?.featureBooks} />
           )}
         </div>
-        <div className="mt-12">
-          <AdsenseUnit />
-        </div>
 
         <Categories />
 
@@ -53,10 +48,6 @@ export default async function Home() {
           {homeResponse?.home?.recentBooks && (
             <BookGrid books={homeResponse?.home?.recentBooks} />
           )}
-        </div>
-
-        <div className="mt-12">
-          <AdsenseUnit />
         </div>
 
         <div className="mt-12">

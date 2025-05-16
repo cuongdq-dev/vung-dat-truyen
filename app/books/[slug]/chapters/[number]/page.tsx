@@ -1,4 +1,4 @@
-import { AdsenseUnit } from "@/components/ads/ad-unit";
+import { RandomAdsense } from "@/components/ads/random-ads";
 import { Button } from "@/components/ui/button";
 import { getChapterContent } from "@/lib/api";
 import { ChevronLeft, ChevronRight, TableOfContents } from "lucide-react";
@@ -68,7 +68,7 @@ export default async function ReadPage({ params }: ChapterPageProps) {
           prevChapter={prevChapter}
         />
         <div className="mt-6 max-h-[100px]">
-          <AdsenseUnit />
+          <RandomAdsense />
         </div>
         <div dangerouslySetInnerHTML={{ __html: chapter?.content! }} />
       </div>

@@ -3,9 +3,20 @@ import { useSetting } from "@/context/SettingContext";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { RandomAdsense } from "./ads/random-ads";
+import { useState, useEffect } from "react";
 
 export function Categories() {
   const { categories } = useSetting();
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (categories) setLoading(false);
+    else setLoading(true);
+  }, [categories]);
+
+  if (loading) return <></>;
   return (
     <div className="mt-12">
       <div className="flex items-center justify-between mb-4">
@@ -35,6 +46,10 @@ export function Categories() {
                 </div>
               </Link>
             ))}
+      </div>
+
+      <div className="mt-12 max-h-[100px]">
+        <RandomAdsense />
       </div>
     </div>
   );

@@ -1,30 +1,27 @@
-"use client";
-import { useSetting } from "@/context/SettingContext";
+import { Adsense, AdsenseSlot } from "@/lib/types";
 import { useEffect } from "react";
 
-export const AdsenseUnit = () => {
-  const { adsense } = useSetting();
-
-  function getRandomItem<T>(arr: T[]): T | undefined {
-    if (!arr.length) return undefined;
-    return arr[Math.floor(Math.random() * arr.length)];
-  }
-  const adsenseSlot = getRandomItem(adsense?.adsense_slots!);
-
+export const AdsenseUnit = (adsense: Adsense & { slot: AdsenseSlot }) => {
   useEffect(() => {
-    if (typeof window !== "undefined" && window.adsbygoogle) {
-      window.adsbygoogle.push({});
+    try {
+      if (typeof window !== "undefined" && (window.adsbygoogle as any)) {
+        (window.adsbygoogle as any).push({});
+      }
+    } catch (e) {
+      console.warn("Adsense error", e);
     }
   }, []);
 
-  if (!adsense?.adsense_client || !adsenseSlot?.slot_id) return null;
+  const slot_id = adsense.slot.slot_id;
+  const ca_pub = adsense.adsense_client;
 
+  if (!adsense?.adsense_client || !adsense?.slot) return <></>;
   return (
     <ins
-      className={`adsbygoogle ad-container-${adsenseSlot.slot_name}`}
+      className="adsbygoogle"
       style={{ display: "block" }}
-      data-ad-client={`ca-${adsense.adsense_client}`}
-      data-ad-slot={adsenseSlot.slot_id}
+      data-ad-client={`ca-${ca_pub}`}
+      data-ad-slot={slot_id}
       data-ad-format="autorelaxed"
       data-full-width-responsive="true"
     ></ins>

@@ -1,13 +1,7 @@
 "use client";
 
 import type { Book } from "@/lib/types";
-import {
-  BookMarked,
-  BookOpen,
-  Clock,
-  Share2,
-  TableOfContents,
-} from "lucide-react";
+import { BookOpen, Clock, Share2, TableOfContents } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
@@ -17,10 +11,10 @@ import { ChapterList } from "./chapter-list";
 import { CollapsibleText } from "./ui/collapsible-text";
 import { Skeleton } from "./ui/skeleton";
 
+import Link from "next/link";
+import { RandomAdsense } from "./ads/random-ads";
 import BookCard from "./ui/book-card";
 import { BookmarkButton } from "./ui/bookmark-button";
-import Link from "next/link";
-import { AdsenseUnit } from "./ads/ad-unit";
 
 interface BookDetailsProps {
   book?: Book;
@@ -66,6 +60,7 @@ export function BookDetails({ book, recommence }: BookDetailsProps) {
       </div>
     );
   }
+
   return (
     <div className="container px-4 py-2">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
@@ -161,8 +156,8 @@ export function BookDetails({ book, recommence }: BookDetailsProps) {
               <CollapsibleText text={book?.description!} />
             </div>
 
-            <div className="mb-8 max-h-[100px]">
-              <AdsenseUnit />
+            <div className="mb-8 b max-h-[100px]">
+              <RandomAdsense />
             </div>
           </div>
 

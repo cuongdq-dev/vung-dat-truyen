@@ -108,14 +108,15 @@ export type AdSlotType =
   | "detail"
   | "mutiplex";
 
+export type AdsenseSlot = {
+  slot_name?: string;
+  slot_id?: string;
+  slot_type?: AdSlotType;
+};
 export type Adsense = {
   adsense_ga?: string;
   adsense_client?: string;
-  adsense_slots?: {
-    slot_name?: string;
-    slot_id?: string;
-    slot_type?: AdSlotType;
-  }[];
+  adsense_slots?: AdsenseSlot[];
 };
 
 export type SiteSetting = {
