@@ -1,10 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useCategories } from "@/context/CategoriesContext";
+import { useSetting } from "@/context/SettingContext";
 import Link from "next/link";
 
 export function Categories() {
-  const categories = useCategories();
+  const { categories } = useSetting();
   return (
     <div className="mt-12">
       <div className="flex items-center justify-between mb-4">
@@ -12,7 +12,7 @@ export function Categories() {
         <Button variant="ghost" size="sm" asChild></Button>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <Link
             key={category.id}
             href={`/books/danh-muc/${category.slug}`}

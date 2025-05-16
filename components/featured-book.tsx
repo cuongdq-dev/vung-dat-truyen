@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Star } from "lucide-react";
 import { Book } from "@/lib/types";
-import { useCategories } from "@/context/CategoriesContext";
+import { useSetting } from "@/context/SettingContext";
 
 export function FeaturedBook({ book }: { book: Book }) {
   return (

@@ -10,11 +10,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { SearchBar } from "./search-bar";
-import { useCategories } from "@/context/CategoriesContext";
+import { useSetting } from "@/context/SettingContext";
 import Link from "next/link";
 
 export function Header() {
-  const categories = useCategories();
+  const { categories } = useSetting();
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container px-4 py-2 flex h-14 items-center w-full lg:max-w-[70%] flex row justify-between">

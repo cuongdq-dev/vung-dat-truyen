@@ -3,7 +3,7 @@ import { BookGrid } from "@/components/book-grid";
 import { Categories } from "@/components/categories";
 import { FeaturedBook } from "@/components/featured-book";
 import { Button } from "@/components/ui/button";
-import { useCategories } from "@/context/CategoriesContext";
+import { useSetting } from "@/context/SettingContext";
 import { getHome } from "@/lib/api";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";

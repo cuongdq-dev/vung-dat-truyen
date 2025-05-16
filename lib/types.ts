@@ -100,3 +100,25 @@ export type ListBookResponse = {
     last?: string;
   };
 };
+
+export type AdSlotType =
+  | "horizontal"
+  | "vertical"
+  | "square"
+  | "detail"
+  | "mutiplex";
+
+export type Adsense = {
+  adsense_ga?: string;
+  adsense_client?: string;
+  adsense_slots?: {
+    slot_name?: string;
+    slot_id?: string;
+    slot_type?: AdSlotType;
+  }[];
+};
+
+export type SiteSetting = {
+  categories?: CategoryItem[];
+  adsense?: Adsense;
+};

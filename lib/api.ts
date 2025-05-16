@@ -1,10 +1,11 @@
 import type {
+  Adsense,
   Book,
-  CategoryItem,
   Chapter,
   HomeResponse,
   ListBookResponse,
   ReadingProgress,
+  SiteSetting,
 } from "./types";
 
 // Simulated API calls with mock data
@@ -13,9 +14,25 @@ import type {
 const API_URL = process.env.SITE_API_URL!;
 const AUTH_TOKEN = process.env.SITE_AUTH_TOKEN!;
 
-export async function getCategories(): Promise<CategoryItem[] | undefined> {
+export async function getAdsense(): Promise<Adsense | undefined> {
   try {
-    const response = await fetch(`${API_URL}/book/categories`, {
+    const response = await fetch(`${API_URL}/book/adsense`, {
+      headers: {
+        Authorization: `Bearer ${AUTH_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      cache: "no-store", // Đảm bảo SSR
+    });
+    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error("getHome error:", error);
+    return undefined;
+  }
+}
+export async function getSiteSetting(): Promise<SiteSetting | undefined> {
+  try {
+    const response = await fetch(`${API_URL}/book/site-setting`, {
       headers: {
         Authorization: `Bearer ${AUTH_TOKEN}`,
         "Content-Type": "application/json",
