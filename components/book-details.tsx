@@ -156,8 +156,8 @@ export function BookDetails({ book, recommence }: BookDetailsProps) {
               <CollapsibleText text={book?.description!} />
             </div>
 
-            <div className="mb-8 b max-h-[100px]">
-              <RandomAdsense />
+            <div className="mb-8">
+              <RandomAdsense index={2} />
             </div>
           </div>
 

@@ -67,8 +67,8 @@ export default async function ReadPage({ params }: ChapterPageProps) {
           nextChapter={nextChapter}
           prevChapter={prevChapter}
         />
-        <div className="mt-6 max-h-[100px]">
-          <RandomAdsense />
+        <div className="mt-6">
+          <RandomAdsense index={1} />
         </div>
         <div dangerouslySetInnerHTML={{ __html: chapter?.content! }} />
       </div>
