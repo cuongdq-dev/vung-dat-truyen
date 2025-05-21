@@ -15,6 +15,7 @@ import Link from "next/link";
 import { RandomAdsense } from "./ads/random-ads";
 import BookCard from "./ui/book-card";
 import { BookmarkButton } from "./ui/bookmark-button";
+import { ImageCustom } from "./ui/image";
 
 interface BookDetailsProps {
   book?: Book;
@@ -67,8 +68,8 @@ export function BookDetails({ book, recommence }: BookDetailsProps) {
         <div className="md:col-span-1">
           <div className="sticky top-24">
             <div className="relative mx-auto w-[200px] md:w-[250px] aspect-[2/3] rounded-lg overflow-hidden shadow-lg mb-6">
-              <img
-                src={book?.thumbnail?.url || "/placeholder.svg"}
+              <ImageCustom
+                src={book?.thumbnail?.url}
                 alt={book?.thumbnail?.slug}
                 className="w-full h-full object-cover"
               />

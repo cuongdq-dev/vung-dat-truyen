@@ -2,12 +2,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Book } from "@/lib/types";
 import { Heart, Star } from "lucide-react";
+import { ImageCustom } from "./image";
 
 export default function BookCard({ book }: { book?: Book }) {
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-lg border bg-background transition-all hover:shadow-md">
       <a href={`/books/${book?.slug}`} className="aspect-[2/3] overflow-hidden">
-        <img
+        <ImageCustom
           src={book?.thumbnail?.url || "/placeholder.svg"}
           alt={book?.thumbnail?.slug}
           width={160}

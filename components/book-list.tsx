@@ -4,6 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { Book } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ImageCustom } from "./ui/image";
 
 export function BookList({ books }: { books?: Book[] }) {
   const [loading, setLoading] = useState(true);
@@ -36,17 +37,12 @@ export function BookList({ books }: { books?: Book[] }) {
           className="flex flex-col"
         >
           <div className="relative">
-            <img
+            <ImageCustom
               src={
                 book.thumbnail?.url || "/placeholder.svg?height=200&width=150"
               }
               alt={book.thumbnail?.slug}
               className="w-full aspect-[2/3] object-cover rounded-md"
-              onError={(e) => {
-                const target = e.currentTarget;
-                target.onerror = null;
-                target.src = "/placeholder.svg?height=200&width=150";
-              }}
             />
             <div className="absolute bottom-1 left-1 bg-background/80 backdrop-blur-sm text-xs px-1.5 py-0.5 rounded">
               {`Chương ${book?.total_chapter}` || 0}

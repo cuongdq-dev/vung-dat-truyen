@@ -64,10 +64,11 @@ export async function getHome(): Promise<HomeResponse | undefined> {
   }
 }
 
-export async function getBooks(params?: {
+const getSearch = (params?: {
   [key: string]: string | string[] | undefined;
-}): Promise<ListBookResponse | undefined> {
-  try {
+}) => {
+  if (!params) return "";
+  else {
     const search = new URLSearchParams();
 
     for (const key in params) {
@@ -79,7 +80,15 @@ export async function getBooks(params?: {
       }
     }
 
-    const response = await fetch(`${API_URL}/book/list?${search.toString()}`, {
+    return `?${search.toString()}`;
+  }
+};
+export async function getBooks(params?: {
+  [key: string]: string | string[] | undefined;
+}): Promise<ListBookResponse | undefined> {
+  try {
+    const search = getSearch(params);
+    const response = await fetch(`${API_URL}/book/list${search.toString()}`, {
       headers: {
         Authorization: `Bearer ${AUTH_TOKEN}`,
         "Content-Type": "application/json",
@@ -101,19 +110,10 @@ export async function getBooksByCategory(
   }
 ): Promise<ListBookResponse | undefined> {
   try {
-    const search = new URLSearchParams();
-
-    for (const key in params) {
-      const value = params[key];
-      if (typeof value === "string") {
-        search.set(key, value);
-      } else if (Array.isArray(value)) {
-        value.forEach((v) => search.append(key, v));
-      }
-    }
+    const search = getSearch(params);
 
     const response = await fetch(
-      `${API_URL}/book/list/category/${slug}?${search.toString()}`,
+      `${API_URL}/book/list/category/${slug}${search}`,
       {
         headers: {
           Authorization: `Bearer ${AUTH_TOKEN}`,

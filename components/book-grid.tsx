@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BookIcon, BookOpen } from "lucide-react";
 import { Book } from "@/lib/types";
+import { ImageCustom } from "./ui/image";
 
 const books = [
   {
@@ -61,7 +62,7 @@ export function BookGrid({ books }: { books: Book[] }) {
         >
           <div className="flex flex-col h-full">
             <div className="relative aspect-[2/3] rounded-md overflow-hidden bg-gray-100 dark:bg-gray-800 mb-2">
-              <img
+              <ImageCustom
                 src={book?.thumbnail?.url || "/placeholder.svg"}
                 alt={book?.thumbnail?.slug}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"

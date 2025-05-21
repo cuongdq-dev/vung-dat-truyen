@@ -12,6 +12,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { ImageCustom } from "@/components/ui/image";
 import { useToast } from "@/components/ui/use-toast";
 import type { BookmarkItem } from "@/lib/bookmark";
 import {
@@ -116,7 +117,7 @@ export default function BookmarkClientPage() {
           {bookmarks.map((bookmark) => (
             <div key={bookmark.id} className="border rounded-lg p-4 flex gap-4">
               <div className="w-16 h-24 flex-shrink-0">
-                <img
+                <ImageCustom
                   src={
                     bookmark?.thumbnail_url ||
                     "/placeholder.svg?height=96&width=64"

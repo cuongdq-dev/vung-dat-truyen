@@ -1,11 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import { Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Book } from "@/lib/types";
-import { useSetting } from "@/context/SettingContext";
+import Link from "next/link";
+import { ImageCustom } from "./ui/image";
 
 export function FeaturedBook({ book }: { book: Book }) {
   return (
@@ -70,7 +69,7 @@ export function FeaturedBook({ book }: { book: Book }) {
         </div>
         <div className="md:w-1/3 flex justify-center">
           <div className="w-48 h-72 bg-gray-300 rounded-lg overflow-hidden">
-            <img
+            <ImageCustom
               src={book?.thumbnail?.url}
               alt={book?.thumbnail?.slug}
               className="w-full h-full object-cover"
