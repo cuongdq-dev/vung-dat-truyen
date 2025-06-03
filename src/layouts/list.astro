@@ -1,0 +1,43 @@
+---
+import ViewListHeader from "~/components/shared/view-list-header.astro";
+import type { Entry } from "~/lib/types";
+import BaseLayout from "./base.astro";
+
+const {
+  description,
+  keywords,
+  title,
+  ogImage,
+  pubDatetime,
+  modDatetime,
+  header,
+  entry,
+}: {
+  description?: string;
+  keywords?: string;
+  title?: string;
+  ogImage?: string;
+  pubDatetime?: Date;
+  modDatetime?: Date;
+  entry?: Entry;
+  header?: string;
+} = Astro.props;
+---
+
+<BaseLayout
+  description={description}
+  keywords={keywords}
+  title={title}
+  ogImage={ogImage}
+  pubDatetime={pubDatetime}
+  modDatetime={modDatetime}
+  entry={entry}
+>
+  <div
+    class="container flex flex-col h-full pb-8 pt-4"
+    data-pagefind-ignore="all"
+  >
+    <ViewListHeader title={header!} />
+    <slot />
+  </div>
+</BaseLayout>

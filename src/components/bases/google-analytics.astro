@@ -1,0 +1,17 @@
+---
+const { adsense_ga } = Astro.props as { adsense_ga?: string };
+---
+
+<!-- Google tag (gtag.js) -->
+<script
+  is:inline
+  type="text/partytown"
+  src=`https://www.googletagmanager.com/gtag/js?id=${adsense_ga}`></script>
+<script is:inline define:vars={{ adsense_ga }}>
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    dataLayer.push(arguments);
+  };
+  window.gtag("js", new Date());
+  window.gtag("config", adsense_ga);
+</script>

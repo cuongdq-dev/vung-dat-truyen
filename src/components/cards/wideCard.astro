@@ -1,0 +1,61 @@
+---
+import { getDateDistance } from "~/lib/utils/date";
+import Divider from "../bases/divider.astro";
+import { base64ToWebP } from "~/lib/utils/imageProcessor";
+import { fRelativeTime } from "~/lib/utils/format-time";
+
+type Props = {
+  article: BookItem;
+  isLast: boolean;
+};
+
+const { article, isLast } = Astro.props;
+
+const thumbnail = { src: article?.thumbnail?.url, width: 800, height: 600 };
+---
+
+<li class="group w-full mx-auto lg:max-w-full">
+  <a
+    data-astro-prefetch="false"
+    href={`/bai-viet/${article?.slug}`}
+    class="flex flex-col lg:flex-row gap-4"
+  >
+    <div
+      class:list={[
+        "flex-1 flex flex-col gap-4 lg:flex-row-reverse pb-4 lg:pb-4",
+        isLast ? "border-b-0" : "border-b",
+      ]}
+    >
+      <div class="w-full lg:w-60 aspect-video">
+        <img
+          alt={article?.thumbnail?.slug}
+          src={thumbnail.src}
+          height={thumbnail.height}
+          width={thumbnail.width}
+          loading={"lazy"}
+          class="aspect-video rounded w-full h-full object-cover"
+          decoding="async"
+        />
+      </div>
+      <div class="flex-1 space-y-2">
+        <h3 class="text-xl font-semibold lg:group-hover:underline">
+          {article.title}
+        </h3>
+
+        <p
+          set:html={article?.meta_description}
+          class="text-base-content/80 text-pretty"
+        />
+        <div class="flex items-center text-xs text-base-content/80 mt-2">
+          <span class="text-xs text-primary/80"
+            >{article?.categories?.map((cate) => cate.name).join(",")}</span
+          >
+          {Number(article?.categories?.length) > 0 && <Divider />}
+          <span class="text-xs text-base-content/80"
+            >{fRelativeTime(article?.created_at)}</span
+          >
+        </div>
+      </div>
+    </div>
+  </a>
+</li>

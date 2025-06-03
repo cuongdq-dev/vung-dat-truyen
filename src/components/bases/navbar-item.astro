@@ -1,0 +1,50 @@
+---
+type Item = {
+  slug?: string;
+  id?: string;
+  name?: string;
+  postCount?: number;
+  href?: string;
+};
+type Props = { item: Item };
+const currentPath = Astro.url.pathname;
+const { item } = Astro.props;
+
+function isActive(item: Item, currentPath: string) {
+  switch (item.slug) {
+    case "trang-chu":
+      return currentPath == "/";
+
+    default:
+      return currentPath.split("/").includes(item?.slug?.toLocaleLowerCase()!);
+  }
+}
+
+function formatHref(href: string) {
+  switch (href) {
+    case "/":
+      return Astro.url.origin;
+
+    case "/tags":
+      return Astro.url.origin + "/tags";
+
+    default:
+      return `${Astro.url.origin}${href}/trang-1`;
+  }
+}
+---
+
+<li
+  class:list={[
+    "md:pt-0 pt-5 relative after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-full after:transition-all after:duration-300 ",
+    isActive(item, currentPath)
+      ? "after:bg-base-content pointer-events-none font-bold"
+      : "after:bg-transparent ",
+  ]}
+>
+  <a
+    data-astro-prefetch="false"
+    href={formatHref(item.href!)}
+    aria-label={item.name}>{item.name}</a
+  >
+</li>

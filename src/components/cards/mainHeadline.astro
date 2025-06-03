@@ -1,0 +1,55 @@
+---
+import Divider from "~/components/bases/divider.astro";
+import { getDateDistance } from "~/lib/utils/date";
+import { base64ToWebP } from "~/lib/utils/imageProcessor";
+
+type Props = { article: BookItem };
+
+const { article } = Astro.props;
+
+const thumbnail = { src: article?.thumbnail?.url, width: 800, height: 600 };
+---
+
+<article class="group">
+  <a
+    data-astro-prefetch="false"
+    href={`/bai-viet/${article?.slug}`}
+    class="flex flex-col-reverse md:flex-col gap-4"
+  >
+    <div class="aspect-video overflow-hidden rounded-md">
+      {
+        thumbnail && (
+          <img
+            class="object-cover rounded w-full h-full"
+            alt={article?.thumbnail?.slug}
+            loading={"lazy"}
+            decoding="async"
+            src={thumbnail.src}
+            width={thumbnail.width}
+            height={thumbnail.height}
+          />
+        )
+      }
+    </div>
+    <div class="flex flex-col gap-2">
+      <div>
+        <h2
+          class="text-xl font-semibold lg:group-hover:underline underline-offset-2"
+        >
+          {article?.title}
+        </h2>
+        <p
+          set:html={article?.meta_description}
+          class="text-base-content/90 text-base max-w-lg"
+        />
+      </div>
+      <div class="flex items-center text-xs text-base-content/80 mt-2">
+        <span class="text-primary"
+          >{article?.categories?.map((cate) => cate.name).join(", ")}</span
+        >
+        {Number(article?.categories?.length) > 0 && <Divider />}
+        <span>{getDateDistance(article?.created_at)}</span>
+      </div>
+    </div>
+  </a>
+</article>

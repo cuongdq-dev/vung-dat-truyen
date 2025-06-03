@@ -1,0 +1,17 @@
+---
+import BookCatalogClient from "~/components/elements/book-catalog-client";
+import BaseLayout from "~/layouts/base.astro";
+import { getBooks } from "~/lib/api/book";
+
+const searchParams = Object.fromEntries(Astro.url.searchParams.entries());
+
+const books = await getBooks(searchParams);
+---
+
+<BaseLayout>
+  <BookCatalogClient
+    client:load
+    datasource={books!}
+    searchParams={searchParams}
+  />
+</BaseLayout>

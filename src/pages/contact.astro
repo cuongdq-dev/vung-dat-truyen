@@ -1,0 +1,118 @@
+---
+import BaseLayout from "~/layouts/base.astro";
+import ContentLayout from "~/layouts/content.astro";
+import { getEntry } from "astro:content";
+
+const entry = await getEntry("views", "contact");
+
+if (!entry) {
+  return Astro.redirect("/404");
+}
+---
+
+<BaseLayout entry={entry}>
+  <ContentLayout>
+    <div
+      class="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-12 shadow-lg rounded-lg bg-base-200 dark:bg-base-200"
+    >
+      <!-- Left: Contact Info -->
+      <div class="space-y-6">
+        <h1 class="text-4xl font-bold">Liên hệ với chúng tôi</h1>
+        <p class="text-lg">
+          Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn. Hãy liên hệ ngay nếu
+          bạn có thắc mắc hoặc góp ý!
+        </p>
+
+        <div class="space-y-4 text-lg">
+          <p><strong>Email:</strong> contact@toanquan24h.com</p>
+          <p><strong>Điện thoại:</strong> +84 123 456 789</p>
+        </div>
+      </div>
+
+      <!-- Right: Contact Form -->
+      <div class="p-8 rounded-lg shadow-md bg-base-100 dark:bg-base-100">
+        <h2 class="text-2xl font-semibold mb-4">Gửi tin nhắn</h2>
+        <form action="#" method="POST" class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <input
+              type="text"
+              name="first_name"
+              placeholder="Họ"
+              required
+              class="input-field"
+            />
+            <input
+              type="text"
+              name="last_name"
+              placeholder="Tên"
+              required
+              class="input-field"
+            />
+          </div>
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Email của bạn"
+            required
+            class="input-field"
+          />
+
+          <div class="grid grid-cols-3 gap-4">
+            <select name="country_code" class="input-field">
+              <option value="+84">🇻🇳 +84</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+62">🇮🇩 +62</option>
+            </select>
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Số điện thoại"
+              class="input-field col-span-2"
+            />
+          </div>
+
+          <textarea
+            name="message"
+            placeholder="Lời nhắn của bạn..."
+            rows="4"
+            class="input-field"></textarea>
+
+          <button
+            type="submit"
+            class="w-full py-3 bg-indigo-600 text-white font-bold rounded-lg shadow-md hover:bg-indigo-700 transition"
+          >
+            Gửi tin nhắn
+          </button>
+        </form>
+
+        <p class="text-xs text-gray-500 text-center mt-4">
+          Bằng cách gửi tin nhắn, bạn đồng ý với
+          <a
+            data-astro-prefetch="false"
+            href="#"
+            class="text-indigo-600 font-semibold hover:underline"
+            >Điều khoản & Chính sách bảo mật</a
+          >.
+        </p>
+      </div>
+    </div>
+  </ContentLayout>
+</BaseLayout>
+
+<style>
+  .input-field {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    background-color: transparent;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+  }
+  .input-field:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 5px rgba(99, 102, 241, 0.3);
+  }
+</style>

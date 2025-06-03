@@ -1,0 +1,13 @@
+---
+import { BookDetail } from "~/components/elements/book-details";
+import BaseLayout from "~/layouts/base.astro";
+import { getBookById } from "~/lib/api/book";
+
+const { slug } = Astro.params;
+
+const detail = await getBookById(slug!);
+---
+
+<BaseLayout>
+  <BookDetail client:load book={detail?.data} recommence={detail?.recommence} />
+</BaseLayout>

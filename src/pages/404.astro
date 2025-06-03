@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../layouts/base.astro";
+---
+
+<BaseLayout>
+  <div class="h-full container flex flex-col items-center justify-center py-20">
+    <h1 class="text-4xl text-center">404 - Không thể tìm thấy trang.</h1>
+    <p class="mt-2">Oops! Trang không tồn tại.</p>
+    <a
+      data-astro-prefetch="false"
+      href={`${Astro.url.origin}`}
+      class="btn mt-6"
+      aria-label="Return to Homepage">Trở về trang chủ</a
+    >
+  </div>
+</BaseLayout>

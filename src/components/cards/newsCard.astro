@@ -1,0 +1,60 @@
+---
+import { fRelativeTime } from "~/lib/utils/format-time";
+import Divider from "../bases/divider.astro";
+import { base64ToWebP } from "~/lib/utils/imageProcessor";
+import TagList from "../elements/tag-list.astro";
+
+type Props = {
+  article: BookItem;
+  index: number;
+};
+
+const { article, index } = Astro.props;
+const thumbnail = { src: article?.thumbnail?.url, width: 800, height: 600 };
+---
+
+<article class="col-span-1 group mx-auto flex">
+  <a
+    data-astro-prefetch="false"
+    href={`${Astro.url.origin}/bai-viet/${article?.slug}`}
+    class="flex flex-col gap-2 h-full"
+  >
+    <div class="aspect-video overflow-hidden rounded-md">
+      {
+        thumbnail && (
+          <img
+            alt={article?.thumbnail?.slug}
+            src={thumbnail.src}
+            class="w-full h-full object-cover"
+            loading={index < 3 ? "eager" : "lazy"}
+            class="w-full h-full object-cover"
+            decoding="async"
+            height={thumbnail.height}
+            width={thumbnail.width}
+          />
+        )
+      }
+    </div>
+    <div class="flex flex-col flex-1">
+      <div class="flex items-center text-xs text-base-content/80 mt-2">
+        <span class="text-xs text-primary/80"
+          >{article?.categories?.map((cate) => cate.name).join(",")}</span
+        >
+        {Number(article?.categories?.length) > 0 && <Divider />}
+        <span class="text-xs text-base-content/80"
+          >{fRelativeTime(article?.created_at)}</span
+        >
+      </div>
+
+      <h3
+        class="text-xl font-serif font-semibold lg:group-hover:underline line-clamp-2"
+      >
+        {article.title}
+      </h3>
+      <p
+        set:html={article?.meta_description}
+        class="text-sm text-base-content/80 line-clamp-3 text-pretty lg:mb-auto"
+      />
+    </div>
+  </a>
+</article>

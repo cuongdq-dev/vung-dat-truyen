@@ -1,0 +1,95 @@
+---
+import { ChevronRight } from "lucide-react";
+import { AdsenseHorizontal, AdsenseMultiplex } from "~/components/adsense";
+import { BookGrid } from "~/components/elements/book-grid";
+import { Categories } from "~/components/elements/categories";
+import { Button } from "~/components/ui/button";
+import BaseLayout from "~/layouts/base.astro";
+import { FeaturedBook } from "../components/elements/featured-book";
+
+const { home, adsense, categories } = Astro.locals;
+const adsense_1 = adsense?.adsense_slots?.find(
+  (adsense) => adsense?.slot_name == "multiplex"
+);
+const adsense_2 = adsense?.adsense_slots?.find(
+  (adsense) => adsense?.slot_name == "horizontal-1"
+);
+---
+
+<BaseLayout>
+  <div class="container py-4 px-4">
+    {home?.top && <FeaturedBook client:load book={home?.top} />}
+    <!-- {home?.recentBooks && <Headlines articles={home?.recentBooks} />} -->
+
+    <div class="mt-12">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-bold">Truyện Đề Xuất</h2>
+        <Button variant="ghost" size="sm" asChild>
+          <a href="/danh-muc" class="flex items-center gap-1">
+            Xem tất cả
+            <ChevronRight className="h-4 w-4" />
+          </a>
+        </Button>
+      </div>
+      {home?.featureBooks && <BookGrid books={home?.featureBooks} />}
+    </div>
+
+    {
+      adsense_2 && (
+        <section class="container mt-5" data-pagefind-ignore="all">
+          <AdsenseHorizontal
+            client:only="react"
+            pub={adsense?.adsense_client!}
+            slot_adsense={{
+              id: adsense_2?.slot_id,
+              name: adsense_2?.slot_name,
+            }}
+          />
+        </section>
+      )
+    }
+
+    {categories && <Categories categories={categories} />}
+
+    {
+      adsense_1 && (
+        <section class="container mt-5" data-pagefind-ignore="all">
+          <AdsenseMultiplex
+            client:only="react"
+            pub={adsense?.adsense_client!}
+            slot_adsense={{
+              id: adsense_1?.slot_id,
+              name: adsense_1?.slot_name,
+            }}
+          />
+        </section>
+      )
+    }
+
+    <div class="mt-12">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-bold">Mới Cập Nhật</h2>
+        <Button variant="ghost" size="sm" asChild>
+          <a href="/danh-muc" class="flex items-center gap-1">
+            Xem tất cả
+            <ChevronRight className="h-4 w-4" />
+          </a>
+        </Button>
+      </div>
+      {home?.recentBooks && <BookGrid books={home?.recentBooks} />}
+    </div>
+
+    <div class="mt-12">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-bold">Đọc Nhiều Nhất</h2>
+        <Button variant="ghost" size="sm" asChild>
+          <a href="/danh-muc" class="flex items-center gap-1">
+            Xem tất cả
+            <ChevronRight className="h-4 w-4" />
+          </a>
+        </Button>
+      </div>
+      {home?.otherBooks && <BookGrid books={home?.otherBooks} />}
+    </div>
+  </div>
+</BaseLayout>

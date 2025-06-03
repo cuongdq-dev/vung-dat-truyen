@@ -1,0 +1,210 @@
+---
+import { BookOpen } from "lucide-react";
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav
+  id="bottom-navbar"
+  class="z-[100] fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-md border-t border-border flex justify-around py-0 transition-all duration-300 ease-in-out"
+>
+  <a
+    href="/"
+    class={`nav-item flex flex-col items-center p-2 w-[100%] transition-all duration-300 ${
+      currentPath === "/" ? "font-bold text-primary" : ""
+    }`}
+  >
+    <svg
+      class="nav-icon w-6 h-6"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
+    <span class="nav-text text-xs mt-1 transition-all duration-300">
+      Vùng Đất Truyện
+    </span>
+  </a>
+
+  <a
+    href="/danh-muc"
+    class={`nav-item flex flex-col items-center p-2 w-[100%] transition-all duration-300 ${
+      currentPath.includes("/danh-muc") ? "font-bold text-primary" : ""
+    }`}
+  >
+    <BookOpen className="nav-icon h-6 w-6" />
+    <span class="nav-text text-xs mt-1 transition-all duration-300">
+      Danh Mục
+    </span>
+  </a>
+
+  <a
+    href="/bookmark"
+    class={`nav-item flex flex-col items-center p-2 w-full transition-all duration-300 ${
+      currentPath.includes("/bookmark") ? "font-bold text-primary" : ""
+    }`}
+  >
+    <svg
+      class="nav-icon w-6 h-6"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M19 21L12 16L5 21V5C5 4.46957 5.21071 3.96086 5.58579 3.58579C5.96086 3.21071 6.46957 3 7 3H17C17.5304 3 18.0391 3.21071 18.4142 3.58579C18.7893 3.96086 19 4.46957 19 5V21Z"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
+    <span class="nav-text text-xs mt-1 transition-all duration-300">
+      Bookmark
+    </span>
+  </a>
+</nav>
+
+<script>
+  class ScrollNavbarController {
+    private navbar: HTMLElement | null;
+    private navTexts: NodeListOf<Element>;
+    private isScrolling: boolean = false;
+    private scrollTimer: number | null = null;
+    private readonly SCROLL_TIMEOUT = 300;
+
+    constructor() {
+      this.navbar = document.getElementById("bottom-navbar");
+      this.navTexts = document.querySelectorAll(".nav-text");
+      this.init();
+    }
+
+    private init(): void {
+      if (!this.navbar) return;
+
+      window.addEventListener("scroll", this.handleScroll.bind(this), {
+        passive: true,
+      });
+
+      window.addEventListener("wheel", this.handleWheel.bind(this), {
+        passive: true,
+      });
+
+      window.addEventListener("touchmove", this.handleTouchMove.bind(this), {
+        passive: true,
+      });
+
+      window.addEventListener("touchend", this.handleTouchEnd.bind(this), {
+        passive: true,
+      });
+    }
+
+    private handleScroll(): void {
+      this.onScrollStart();
+    }
+
+    private handleWheel(): void {
+      this.onScrollStart();
+    }
+
+    private handleTouchMove(): void {
+      this.onScrollStart();
+    }
+
+    private handleTouchEnd(): void {
+      setTimeout(() => {
+        this.onScrollStart();
+      }, 100);
+    }
+
+    private onScrollStart(): void {
+      if (!this.isScrolling) {
+        this.isScrolling = true;
+        this.hideText();
+      }
+
+      if (this.scrollTimer) {
+        clearTimeout(this.scrollTimer);
+      }
+
+      this.scrollTimer = window.setTimeout(() => {
+        this.isScrolling = false;
+        this.showText();
+      }, this.SCROLL_TIMEOUT);
+    }
+
+    private hideText(): void {
+      this.navbar?.classList.add("scrolling");
+
+      this.navTexts.forEach((text) => {
+        const element = text as HTMLElement;
+        element.style.opacity = "0";
+        element.style.transform = "translateY(10px) scale(0.8)";
+        element.style.maxHeight = "0";
+        element.style.marginTop = "0";
+      });
+
+      if (this.navbar) {
+        this.navbar.style.paddingTop = "6px";
+        this.navbar.style.paddingBottom = "6px";
+      }
+    }
+
+    private showText(): void {
+      this.navbar?.classList.remove("scrolling");
+
+      this.navTexts.forEach((text) => {
+        const element = text as HTMLElement;
+        element.style.opacity = "1";
+        element.style.transform = "translateY(0) scale(1)";
+        element.style.maxHeight = "20px";
+        element.style.marginTop = "4px";
+      });
+
+      if (this.navbar) {
+        this.navbar.style.paddingTop = "8px";
+        this.navbar.style.paddingBottom = "8px";
+      }
+    }
+  }
+
+  function initScrollNavbar() {
+    new ScrollNavbarController();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initScrollNavbar);
+  } else {
+    initScrollNavbar();
+  }
+
+  document.addEventListener("astro:page-load", initScrollNavbar);
+</script>
+
+<style>
+  /* Responsive design */
+  @media (max-width: 480px) {
+    .nav-text {
+      font-size: 10px;
+    }
+
+    .nav-icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .nav-item,
+    .nav-text,
+    .nav-icon,
+    #bottom-navbar {
+      transition: none;
+    }
+  }
+</style>

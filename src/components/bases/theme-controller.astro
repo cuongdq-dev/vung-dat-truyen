@@ -1,0 +1,33 @@
+---
+import Moon from "~/assets/svgs/moon.astro";
+import Sun from "~/assets/svgs/sun.astro";
+import { ThemeButton } from "../elements/theme-button";
+---
+
+<label class="btn btn-ghost btn-circle swap swap-rotate" for="theme-controller">
+  <!-- <input type="checkbox" class="theme-controller" id="theme-controller" /> -->
+  <ThemeButton client:load />
+</label>
+
+<script is:inline>
+  // Function to apply the initial theme
+  function applyTheme() {
+    const theme = localStorage.getItem("astro-theme") || "light"; // Default to light theme
+
+    if (theme === "dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light");
+      document.documentElement.classList.remove("dark");
+    }
+  }
+
+  // Ensure theme is set on page load
+  document.addEventListener("astro:page-load", () => {
+    applyTheme();
+  });
+
+  // Apply theme immediately on script execution
+  applyTheme();
+</script>

@@ -1,0 +1,270 @@
+---
+// Advanced version with multiple scroll stop detection methods
+import ThemeController from "../bases/theme-controller.astro";
+import { CategoriesList } from "../elements/categories-list";
+
+const {
+  categories: categoriesProps,
+  sticky = true,
+  categorySlug,
+} = Astro.props;
+
+const categories = categoriesProps?.filter(
+  (category: CategoryItem) => Number(category?.bookCount) > 0
+);
+---
+
+<header
+  id="advanced-header"
+  class={`top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm transition-all duration-300 ease-out ${sticky ? "sticky" : ""}`}
+>
+  <div
+    class="container px-4 py-2 flex h-14 items-center w-full lg:max-w-[70%] flex row justify-between"
+  >
+    <div class="flex items-center gap-2 mr-4"></div>
+
+    <div class="flex row items-center gap-2">
+      <CategoriesList slug={categorySlug} categories={categories} client:load />
+      <ThemeController />
+    </div>
+  </div>
+</header>
+
+<script>
+  class AdvancedScrollHeader {
+    private header: HTMLElement | null;
+    private lastScrollY: number = 0;
+    private isScrolling: boolean = false;
+    private scrollStopTimer: number | null = null;
+    private velocityTimer: number | null = null;
+    private scrollVelocity: number = 0;
+    private isHeaderVisible: boolean = true;
+    private readonly SCROLL_STOP_DELAY = 500; // ms
+    private readonly VELOCITY_CHECK_INTERVAL = 100; // ms
+    private readonly MIN_VELOCITY_THRESHOLD = 0.5; // pixels per ms
+
+    constructor() {
+      this.header = document.getElementById("advanced-header");
+      this.init();
+    }
+
+    private init(): void {
+      if (!this.header) return;
+
+      this.lastScrollY = window.scrollY;
+
+      // Multiple event listeners for comprehensive scroll detection
+      window.addEventListener("scroll", this.onScroll.bind(this), {
+        passive: true,
+      });
+      window.addEventListener("wheel", this.onWheel.bind(this), {
+        passive: true,
+      });
+      window.addEventListener("touchmove", this.onTouchMove.bind(this), {
+        passive: true,
+      });
+      window.addEventListener("touchend", this.onTouchEnd.bind(this), {
+        passive: true,
+      });
+      window.addEventListener("keydown", this.onKeyDown.bind(this), {
+        passive: true,
+      });
+
+      // Start velocity monitoring
+      this.startVelocityMonitoring();
+    }
+
+    private onScroll(): void {
+      this.handleScrollEvent();
+    }
+
+    private onWheel(): void {
+      this.handleScrollEvent();
+    }
+
+    private onTouchMove(): void {
+      this.handleScrollEvent();
+    }
+
+    private onTouchEnd(): void {
+      // Immediate check for touch end
+      setTimeout(() => {
+        this.checkScrollStop();
+      }, 1000);
+    }
+
+    private onKeyDown(e: KeyboardEvent): void {
+      // Handle keyboard scrolling (arrow keys, page up/down, etc.)
+      const scrollKeys = [
+        "ArrowUp",
+        "ArrowDown",
+        "PageUp",
+        "PageDown",
+        "Home",
+        "End",
+        " ",
+      ];
+      if (scrollKeys.includes(e.key)) {
+        this.handleScrollEvent();
+      }
+    }
+
+    private handleScrollEvent(): void {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = currentScrollY - this.lastScrollY;
+
+      // Calculate velocity
+      this.scrollVelocity = Math.abs(scrollDelta);
+
+      // Always show at top
+      if (currentScrollY < 20) {
+        this.showHeader();
+        this.lastScrollY = currentScrollY;
+        return;
+      }
+
+      // Hide header when scrolling down
+      if (scrollDelta > 5 && currentScrollY > 80) {
+        this.hideHeader();
+      }
+      // Show header when scrolling up significantly
+      else if (scrollDelta < -10) {
+        this.showHeader();
+      }
+
+      this.lastScrollY = currentScrollY;
+      this.isScrolling = true;
+
+      // Reset scroll stop timer
+      this.resetScrollStopTimer();
+    }
+
+    private startVelocityMonitoring(): void {
+      this.velocityTimer = window.setInterval(() => {
+        // If velocity is very low, consider it stopped
+        if (
+          this.scrollVelocity < this.MIN_VELOCITY_THRESHOLD &&
+          this.isScrolling
+        ) {
+          this.onScrollStop();
+        }
+
+        // Decay velocity
+        this.scrollVelocity *= 0.8;
+      }, this.VELOCITY_CHECK_INTERVAL);
+    }
+
+    private resetScrollStopTimer(): void {
+      if (this.scrollStopTimer) {
+        clearTimeout(this.scrollStopTimer);
+      }
+
+      this.scrollStopTimer = window.setTimeout(() => {
+        this.checkScrollStop();
+      }, this.SCROLL_STOP_DELAY);
+    }
+
+    private checkScrollStop(): void {
+      // Double-check if really stopped
+      const currentScrollY = window.scrollY;
+
+      setTimeout(() => {
+        if (window.scrollY === currentScrollY) {
+          this.onScrollStop();
+        }
+      }, 50);
+    }
+
+    private onScrollStop(): void {
+      if (!this.isScrolling) return;
+
+      this.isScrolling = false;
+      this.scrollVelocity = 0;
+
+      // Always show header when scrolling stops
+      this.showHeader();
+
+      console.log("📍 Scroll stopped - header shown");
+    }
+
+    private hideHeader(): void {
+      if (!this.header || !this.isHeaderVisible) return;
+
+      this.header.style.transform = "translateY(-100%)";
+      this.header.classList.add("header-hidden");
+      this.isHeaderVisible = false;
+    }
+
+    private showHeader(): void {
+      if (!this.header || this.isHeaderVisible) return;
+
+      this.header.style.transform = "translateY(0)";
+      this.header.classList.remove("header-hidden");
+      this.isHeaderVisible = true;
+    }
+
+    // Cleanup method
+    public destroy(): void {
+      if (this.scrollStopTimer) {
+        clearTimeout(this.scrollStopTimer);
+      }
+      if (this.velocityTimer) {
+        clearInterval(this.velocityTimer);
+      }
+    }
+  }
+
+  // Global instance
+  let headerInstance: AdvancedScrollHeader | null = null;
+
+  function initAdvancedHeader() {
+    // Cleanup previous instance
+    if (headerInstance) {
+      headerInstance.destroy();
+    }
+
+    headerInstance = new AdvancedScrollHeader();
+  }
+
+  // Initialize
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAdvancedHeader);
+  } else {
+    initAdvancedHeader();
+  }
+
+  // Re-initialize on navigation
+  document.addEventListener("astro:page-load", initAdvancedHeader);
+
+  // Cleanup on page unload
+  window.addEventListener("beforeunload", () => {
+    if (headerInstance) {
+      headerInstance.destroy();
+    }
+  });
+</script>
+
+<style>
+  #advanced-header {
+    will-change: transform;
+    transform: translateY(0);
+  }
+
+  #advanced-header.header-hidden {
+    box-shadow: none;
+  }
+
+  /* Smooth transitions with better easing */
+  #advanced-header {
+    transition:
+      transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.2s ease;
+  }
+
+  /* Faster transitions on mobile */
+  @media (max-width: 768px) {
+    #advanced-header {
+      transition-duration: 0.25s;
+    }
+  }
+</style>
