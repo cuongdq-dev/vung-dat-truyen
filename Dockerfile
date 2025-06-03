@@ -31,5 +31,5 @@ COPY --from=builder /app/node_modules /app/node_modules
 COPY --from=builder /app/package.json /app/package.json
 
 # Chạy ứng dụng
-EXPOSE 5000
+EXPOSE 5001
 CMD ["node", "dist/server/entry.mjs"]
