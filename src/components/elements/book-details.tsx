@@ -23,7 +23,7 @@ export function BookDetail({ book, recommence }: BookDetailProps) {
 
   if (loading) {
     return (
-      <div className="px-4">
+      <div className="px-4 py-2">
         <div className="flex flex-col items-center">
           <Skeleton className="w-40 aspect-[2/3] object-cover rounded-lg shadow-lg" />
         </div>

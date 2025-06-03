@@ -2,8 +2,8 @@ import { defineMiddleware } from "astro:middleware";
 import { getHome } from "./lib/api/home";
 
 const cache = new Map();
-const CACHE_DURATION = { home: 0 * 1000, page: 0 * 1000 }; // 60s cache
-const STALE_REVALIDATE_THRESHOLD = 0 * 1000; // 10s trước khi hết hạn
+const CACHE_DURATION = { home: 60 * 1000, page: 60 * 1000 }; // 60s cache
+const STALE_REVALIDATE_THRESHOLD = 20 * 1000; // 10s trước khi hết hạn
 
 async function getCachedData(
   key: string,
