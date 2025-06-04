@@ -1,5 +1,4 @@
 ---
-// Advanced version with multiple scroll stop detection methods
 import ThemeController from "../bases/theme-controller.astro";
 import { CategoriesList } from "../elements/categories-list";
 
@@ -15,7 +14,7 @@ const categories = categoriesProps?.filter(
 ---
 
 <header
-  id="advanced-header"
+  id="header-component"
   class={`top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm transition-all duration-300 ease-out ${sticky ? "sticky" : ""}`}
 >
   <div
@@ -31,70 +30,6 @@ const categories = categoriesProps?.filter(
 </header>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const progressBar = document.createElement("div");
-    progressBar.id = "progress-bar";
-    Object.assign(progressBar.style, {
-      position: "fixed",
-      top: "0",
-      left: "0",
-      width: "0%",
-      height: "3px",
-      backgroundColor: "#ff4500",
-      zIndex: "9999",
-      transition: "width 0.3s ease-out, opacity 0.5s ease-in-out",
-      opacity: "1",
-    });
-    document.body.appendChild(progressBar);
-
-    let loading = false;
-    let progress = 0;
-
-    function startLoading() {
-      if (loading) return; // Tránh gọi nhiều lần
-      loading = true;
-      progress = 0;
-      progressBar.style.width = "0%";
-      progressBar.style.opacity = "1";
-
-      function animateProgress() {
-        if (progress < 90) {
-          progress += Math.random() * 2; // Tăng tốc độ ngẫu nhiên
-          progressBar.style.width = progress + "%";
-          requestAnimationFrame(animateProgress);
-        }
-      }
-      animateProgress();
-    }
-
-    function finishLoading() {
-      progressBar.style.width = "100%";
-      setTimeout(() => {
-        progressBar.style.opacity = "0";
-        setTimeout(() => {
-          progressBar.style.width = "0%"; // Reset về 0 để sẵn sàng cho lần tiếp theo
-          loading = false;
-        }, 500);
-      }, 300);
-    }
-
-    document.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", function (event) {
-        if (link.hostname === window.location.hostname) {
-          event.preventDefault();
-          startLoading();
-          window.location.href = link.href;
-        }
-      });
-    });
-
-    window.addEventListener("load", function () {
-      finishLoading();
-    });
-  });
-</script>
-
-<script>
   class AdvancedScrollHeader {
     private header: HTMLElement | null;
     private lastScrollY: number = 0;
@@ -108,7 +43,7 @@ const categories = categoriesProps?.filter(
     private readonly MIN_VELOCITY_THRESHOLD = 0.5; // pixels per ms
 
     constructor() {
-      this.header = document.getElementById("advanced-header");
+      this.header = document.getElementById("header-component");
       this.init();
     }
 
@@ -308,18 +243,86 @@ const categories = categoriesProps?.filter(
   });
 </script>
 
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", function () {
+    const progressBar = document.createElement("div");
+    progressBar.id = "progress-bar";
+    Object.assign(progressBar.style, {
+      position: "fixed",
+      top: "0",
+      left: "0",
+      width: "0%",
+      height: "3px",
+      backgroundColor: "#ff4500",
+      zIndex: "9999",
+      transition: "width 0.3s ease-out, opacity 0.5s ease-in-out",
+      opacity: "1",
+    });
+    document.body.appendChild(progressBar);
+
+    let loading = false;
+    let progress = 0;
+
+    function startLoading() {
+      if (loading) return; // Tránh gọi nhiều lần
+      loading = true;
+      progress = 0;
+      progressBar.style.width = "0%";
+      progressBar.style.opacity = "1";
+
+      function animateProgress() {
+        if (progress < 90) {
+          progress += Math.random() * 2; // Tăng tốc độ ngẫu nhiên
+          progressBar.style.width = progress + "%";
+          requestAnimationFrame(animateProgress);
+        }
+      }
+      animateProgress();
+    }
+
+    function finishLoading() {
+      progressBar.style.width = "100%";
+      setTimeout(() => {
+        progressBar.style.opacity = "0";
+        setTimeout(() => {
+          progressBar.style.width = "0%"; // Reset về 0 để sẵn sàng cho lần tiếp theo
+          loading = false;
+        }, 500);
+      }, 300);
+    }
+
+    document.querySelectorAll("a").forEach((link) => {
+      console.log("sssxx");
+      link.addEventListener("click", function (event) {
+        if (
+          link.hostname === window.location.hostname &&
+          link.target !== "_blank"
+        ) {
+          event.preventDefault();
+          startLoading();
+          window.location.href = link.href;
+        }
+      });
+    });
+
+    window.addEventListener("load", function () {
+      finishLoading();
+    });
+  });
+</script>
+
 <style>
-  #advanced-header {
+  #header-component {
     will-change: transform;
     transform: translateY(0);
   }
 
-  #advanced-header.header-hidden {
+  #header-component.header-hidden {
     box-shadow: none;
   }
 
   /* Smooth transitions with better easing */
-  #advanced-header {
+  #header-component {
     transition:
       transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       box-shadow 0.2s ease;
@@ -327,7 +330,7 @@ const categories = categoriesProps?.filter(
 
   /* Faster transitions on mobile */
   @media (max-width: 768px) {
-    #advanced-header {
+    #header-component {
       transition-duration: 0.25s;
     }
   }

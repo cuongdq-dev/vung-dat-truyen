@@ -15,15 +15,8 @@ export default defineConfig({
   base: SITE.basePath,
   output: "server",
   adapter: node({ mode: "standalone" }),
-  server: {
-    port: 5001,
-    host: true,
-  },
-  markdown: {
-    remarkPlugins: [readingTime, modifiedTime],
-  },
+  server: { port: 5001, host: true },
+  markdown: { remarkPlugins: [readingTime, modifiedTime] },
   integrations: [tailwind(), mdx(), sitemap(), pagefind(), react()],
-  experimental: {
-    responsiveImages: true,
-  },
+  experimental: { responsiveImages: true },
 });
