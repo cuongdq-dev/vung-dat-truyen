@@ -37,7 +37,7 @@ export default function BookCard({ book }: { book?: BookItem }) {
                 <Badge
                   key={category.slug}
                   variant="outline"
-                  className="text-xs"
+                  className="text-xs text-nowrap"
                 >
                   {category?.name}
                 </Badge>

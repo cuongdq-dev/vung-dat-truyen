@@ -35,7 +35,11 @@ const adsense_2 = adsense?.adsense_slots?.find(
           </a>
         </Button>
       </div>
-      {home?.featureBooks && <BookGrid books={home?.featureBooks} />}
+      {
+        home?.featureBooks && (
+          <BookGrid client:visible books={home?.featureBooks} />
+        )
+      }
     </div>
 
     {
@@ -84,7 +88,11 @@ const adsense_2 = adsense?.adsense_slots?.find(
           </a>
         </Button>
       </div>
-      {home?.recentBooks && <BookGrid books={home?.recentBooks} />}
+      {
+        home?.recentBooks && (
+          <BookGrid client:visible books={home?.recentBooks} />
+        )
+      }
     </div>
 
     <div class="mt-12">
@@ -101,7 +109,7 @@ const adsense_2 = adsense?.adsense_slots?.find(
           </a>
         </Button>
       </div>
-      {home?.otherBooks && <BookGrid books={home?.otherBooks} />}
+      {home?.otherBooks && <BookGrid client:visible books={home?.otherBooks} />}
     </div>
   </div>
 </BaseLayout>

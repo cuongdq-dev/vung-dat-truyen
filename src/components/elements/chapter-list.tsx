@@ -69,10 +69,14 @@ export function ChapterList({ chapters, bookSlug }: ChapterListProps) {
 
       <div className="border rounded-lg divide-y">
         {currentChapters.map((chapter) => (
-          <a
+          <button
             key={chapter.slug}
-            href={`/${bookSlug}/chuong/${chapter.chapter_number}`}
-            className="flex justify-between items-center p-4 hover:bg-muted/50 transition-colors"
+            type="button"
+            className="flex w-full justify-between items-center p-4 hover:bg-muted/50 transition-colors text-left"
+            onClick={() => {
+              // Thay bằng logic chuyển trang client-side nếu có
+              window.location.href = `/${bookSlug}/chuong/${chapter.chapter_number}`;
+            }}
           >
             <div>
               <h4 className="font-medium">{chapter.title}</h4>
@@ -80,7 +84,7 @@ export function ChapterList({ chapters, bookSlug }: ChapterListProps) {
             <div className="text-sm text-muted-foreground">
               {fRelativeTime(chapter.created_at)}
             </div>
-          </a>
+          </button>
         ))}
       </div>
 
@@ -90,7 +94,10 @@ export function ChapterList({ chapters, bookSlug }: ChapterListProps) {
           <Button
             variant="outline"
             size="icon"
-            onClick={() => goToPage(1)}
+            onClick={(e) => {
+              e.preventDefault();
+              goToPage(1);
+            }}
             disabled={currentPage === 1}
             title="Trang đầu"
           >
@@ -99,7 +106,10 @@ export function ChapterList({ chapters, bookSlug }: ChapterListProps) {
           <Button
             variant="outline"
             size="icon"
-            onClick={() => goToPage(currentPage - 1)}
+            onClick={(e) => {
+              e.preventDefault();
+              goToPage(currentPage - 1);
+            }}
             disabled={currentPage === 1}
             title="Trang trước"
           >
@@ -113,7 +123,10 @@ export function ChapterList({ chapters, bookSlug }: ChapterListProps) {
           <Button
             variant="outline"
             size="icon"
-            onClick={() => goToPage(currentPage + 1)}
+            onClick={(e) => {
+              e.preventDefault();
+              goToPage(currentPage + 1);
+            }}
             disabled={currentPage === totalPages}
             title="Trang sau"
           >
@@ -122,7 +135,10 @@ export function ChapterList({ chapters, bookSlug }: ChapterListProps) {
           <Button
             variant="outline"
             size="icon"
-            onClick={() => goToPage(totalPages)}
+            onClick={(e) => {
+              e.preventDefault();
+              goToPage(totalPages);
+            }}
             disabled={currentPage === totalPages}
             title="Trang cuối"
           >

@@ -1,13 +1,161 @@
 ---
+import { BookOpen, Clock, TableOfContents } from "lucide-react";
 import { BookDetail } from "~/components/elements/book-details";
+import { ChapterList } from "~/components/elements/chapter-list";
+import { Badge } from "~/components/ui/badge";
+import BookCard from "~/components/ui/book-card";
+import { BookmarkButton } from "~/components/ui/bookmark-button";
+import { Button } from "~/components/ui/button";
+import { CollapsibleText } from "~/components/ui/collapsible-text";
+import { ImageCustom } from "~/components/ui/image";
 import BaseLayout from "~/layouts/base.astro";
 import { getBookById } from "~/lib/api/book";
+import { fRelativeTime } from "~/lib/utils/format-time";
 
 const { slug } = Astro.params;
 
 const detail = await getBookById(slug!);
+const book = detail?.data;
+const recommence = detail?.recommence;
 ---
 
 <BaseLayout>
-  <BookDetail client:load book={detail?.data} recommence={detail?.recommence} />
+  <!-- <BookDetail client:load book={detail?.data} recommence={detail?.recommence} /> -->
+  <div class="container px-4 py-2">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+      <div class="md:col-span-1">
+        <div class="sticky top-24">
+          <div
+            class="relative mx-auto w-[200px] md:w-[250px] aspect-[2/3] rounded-lg overflow-hidden shadow-lg mb-6"
+          >
+            <ImageCustom
+              src={book?.thumbnail?.url}
+              alt={book?.thumbnail?.slug}
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <a href={`/${book?.slug}/chuong/1`}>
+              <Button className="w-full gap-2">
+                <BookOpen className="h-4 w-4" />
+                Đọc từ đầu
+              </Button>
+            </a>
+
+            <a href={`/${book?.slug}/chuong/${book?.total_chapter}`}>
+              <Button variant="outline" className="w-full gap-2">
+                <Clock className="h-4 w-4" />
+                Đọc chương mới nhất
+              </Button>
+            </a>
+
+            <div class="flex gap-2">
+              <BookmarkButton
+                book={book!}
+                className="w-full"
+                showText
+                client:load
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="md:col-span-2 mt-6">
+        <div class="mb-6">
+          <h1 class="text-3xl font-bold mb-2">{book?.title}</h1>
+
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4">
+            <div class="flex items-center gap-1">
+              <TableOfContents className="h-5 w-5" />
+              <span class="font-medium">
+                {Number(book?.chapters?.length)}
+              </span>
+              <span class="text-muted-foreground">(Chương)</span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mb-4">
+            {
+              book?.categories?.map((category) => {
+                return (
+                  <a href={"/danh-muc/" + category.slug}>
+                    <Badge>{category?.name}</Badge>
+                  </a>
+                );
+              })
+            }
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <p class="text-sm text-muted-foreground">Tác giả</p>
+              <p class="font-medium">{book?.author?.name}</p>
+            </div>
+
+            <div>
+              <p class="text-sm text-muted-foreground">Tình trạng</p>
+              <p class="font-medium">
+                {
+                  book?.is_full
+                    ? "Hoàn thành"
+                    : `Chương ${Number(book?.chapters?.length)}`
+                }
+              </p>
+            </div>
+
+            <div>
+              <p class="text-sm text-muted-foreground">Số chương</p>
+              <p class="font-medium">
+                {Number(book?.chapters?.length)} chương
+              </p>
+            </div>
+
+            <div>
+              <p class="text-sm text-muted-foreground">Cập nhật</p>
+              <p class="font-medium">{fRelativeTime(book?.created_at)}</p>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <h3 class="font-medium mb-2">Giới thiệu</h3>
+            <CollapsibleText client:load text={book?.description!} />
+          </div>
+        </div>
+
+        <div class="tabs">
+          <div class="flex w-full border-b">
+            <button
+              class="flex-1 px-4 py-2 border-b-2 border-primary font-medium"
+              data-tab="chapters"
+            >
+              Danh sách chương
+            </button>
+          </div>
+
+          <div class="tab-content pt-6" id="chapters">
+            <ChapterList
+              client:load
+              bookSlug={book?.slug!}
+              chapters={book?.chapters!}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    {
+      Number(recommence?.length) > 0 && (
+        <section>
+          <h2 class="text-2xl font-bold mb-6">Truyện Tương Tự</h2>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {recommence?.map((book) => {
+              return <BookCard book={book} />;
+            })}
+          </div>
+        </section>
+      )
+    }
+  </div>
 </BaseLayout>

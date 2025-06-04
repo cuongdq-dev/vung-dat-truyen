@@ -168,7 +168,6 @@ export function BookDetail({ book, recommence }: BookDetailProps) {
           <h2 className="text-2xl font-bold mb-6">Truyện Tương Tự</h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            <BookCard book={book} />
             {recommence?.map((book, index) => {
               return <BookCard key={book.slug + "_" + index} book={book} />;
             })}

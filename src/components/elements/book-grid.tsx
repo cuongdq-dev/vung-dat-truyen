@@ -1,14 +1,17 @@
 import { BookOpen } from "lucide-react";
 import { ImageCustom } from "../ui/image";
-
+// ...existing code...
 export function BookGrid({ books }: { books: BookItem[] }) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
       {books.map((book, index) => (
         <a
           key={book.slug + "-" + index}
-          href={`/${book.slug}`}
-          className="group"
+          // href={`/${book.slug}`}
+          onClick={() => {
+            window.location.href = `/${book.slug}`;
+          }}
+          className="group cursor-pointer"
         >
           <div className="flex flex-col h-full">
             <div className="relative aspect-[2/3] rounded-md overflow-hidden bg-gray-100 dark:bg-gray-800 mb-2">

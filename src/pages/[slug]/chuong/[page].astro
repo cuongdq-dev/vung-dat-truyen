@@ -27,7 +27,7 @@ const nextChapter =
       </div>
       <div class="sticky top-0 p-2 w-full bg-background">
         <ChapterButtonGroup
-          client:load
+          client:visible
           slug={slug!}
           chapterCurrent={chapter.chapter_number!}
           chapters={chapter?.book?.chapters?.sort((a, b) => {
