@@ -18,7 +18,9 @@ const nextChapter =
     <div class="prose dark:prose-invert mx-auto max-w-6xl">
       <div class="text-center">
         <h4 class="font-normal">
-          <a href={`/${slug}`}>{chapter?.book?.title}</a>
+          <a data-astro-prefetch="false" href={`/${slug}`}
+            >{chapter?.book?.title}</a
+          >
         </h4>
 
         <h2 class="text-center">{chapter.title}</h2>
