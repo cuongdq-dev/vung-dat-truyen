@@ -31,7 +31,7 @@ export const ChapterButtonGroup = ({
   return (
     <div className="flex gap-2 m-2 justify-center">
       {prevChapter ? (
-        <a href={`/${slug}/chuong/${prevChapter}`}>
+        <a data-astro-prefetch={false} href={`/${slug}/chuong/${prevChapter}`}>
           <Button
             variant="outline"
             className="flex items-center gap-2 md:text-xs"
@@ -59,7 +59,7 @@ export const ChapterButtonGroup = ({
         chapters={chapters}
       />
       {nextChapter ? (
-        <a href={`/${slug}/chuong/${nextChapter}`}>
+        <a data-astro-prefetch={false} href={`/${slug}/chuong/${nextChapter}`}>
           <Button
             variant="outline"
             className="flex items-center gap-2 md:text-xs"

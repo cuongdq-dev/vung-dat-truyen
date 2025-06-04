@@ -112,7 +112,7 @@ export default function BookCatalogClient({
     <div className="container py-4 px-4">
       <div className="flex items-center justify-between mb-6 flex-wrap gap-1">
         <div className="flex items-center gap-2">
-          <a href="/" className="p-2">
+          <a data-astro-prefetch={false} href="/" className="p-2">
             <ChevronLeft className="h-5 w-5" />
           </a>
           <h1 className="text-xl font-bold">Danh mục truyện</h1>

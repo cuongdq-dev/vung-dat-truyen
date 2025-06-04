@@ -9,6 +9,7 @@ const currentPath = Astro.url.pathname;
   class="z-[100] fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-md border-t border-border flex justify-around py-0 transition-all duration-300 ease-in-out"
 >
   <a
+    data-astro-prefetch={false}
     href="/"
     class={`nav-item flex flex-col items-center p-2 w-[100%] transition-all duration-300 ${
       currentPath === "/" ? "font-bold text-primary" : ""
@@ -33,6 +34,7 @@ const currentPath = Astro.url.pathname;
   </a>
 
   <a
+    data-astro-prefetch={false}
     href="/danh-muc"
     class={`nav-item flex flex-col items-center p-2 w-[100%] transition-all duration-300 ${
       currentPath.includes("/danh-muc") ? "font-bold text-primary" : ""
@@ -45,6 +47,7 @@ const currentPath = Astro.url.pathname;
   </a>
 
   <a
+    data-astro-prefetch={false}
     href="/bookmark"
     class={`nav-item flex flex-col items-center p-2 w-full transition-all duration-300 ${
       currentPath.includes("/bookmark") ? "font-bold text-primary" : ""

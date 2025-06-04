@@ -68,14 +68,17 @@ export function BookDetail({ book, recommence }: BookDetailProps) {
             </div>
 
             <div className="flex flex-col gap-3">
-              <a href={`/${book?.slug}/chuong/1`}>
+              <a data-astro-prefetch={false} href={`/${book?.slug}/chuong/1`}>
                 <Button className="w-full gap-2">
                   <BookOpen className="h-4 w-4" />
                   Đọc từ đầu
                 </Button>
               </a>
 
-              <a href={`/${book?.slug}/chuong/${book?.total_chapter}`}>
+              <a
+                data-astro-prefetch={false}
+                href={`/${book?.slug}/chuong/${book?.total_chapter}`}
+              >
                 <Button variant="outline" className="w-full gap-2">
                   <Clock className="h-4 w-4" />
                   Đọc chương mới nhất
@@ -106,7 +109,11 @@ export function BookDetail({ book, recommence }: BookDetailProps) {
             <div className="flex flex-wrap gap-2 mb-4">
               {book?.categories?.map((category) => {
                 return (
-                  <a key={category?.slug} href={"/danh-muc/" + category.slug}>
+                  <a
+                    data-astro-prefetch={false}
+                    key={category?.slug}
+                    href={"/danh-muc/" + category.slug}
+                  >
                     <Badge>{category?.name}</Badge>
                   </a>
                 );

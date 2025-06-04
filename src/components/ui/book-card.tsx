@@ -4,7 +4,11 @@ import { ImageCustom } from "./image";
 export default function BookCard({ book }: { book?: BookItem }) {
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-lg border bg-background transition-all hover:shadow-md">
-      <a href={`/${book?.slug}`} className="aspect-[2/3] overflow-hidden">
+      <a
+        data-astro-prefetch={false}
+        href={`/${book?.slug}`}
+        className="aspect-[2/3] overflow-hidden"
+      >
         <ImageCustom
           src={book?.thumbnail?.url || "/placeholder.svg"}
           alt={book?.thumbnail?.slug}
@@ -20,7 +24,7 @@ export default function BookCard({ book }: { book?: BookItem }) {
       </a>
 
       <div className="flex flex-1 flex-col p-3">
-        <a href={`/${book?.slug}`}>
+        <a data-astro-prefetch={false} href={`/${book?.slug}`}>
           <h3 className="font-medium line-clamp-1 group-hover:text-primary">
             {book?.title}
           </h3>

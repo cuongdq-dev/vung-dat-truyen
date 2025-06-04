@@ -2,7 +2,7 @@
 import { ChevronRight } from "lucide-react";
 import { AdsenseHorizontal, AdsenseMultiplex } from "~/components/adsense";
 import { BookGrid } from "~/components/elements/book-grid";
-import { Categories } from "~/components/elements/categories";
+import Categories from "~/components/elements/categories.astro";
 import { Button } from "~/components/ui/button";
 import BaseLayout from "~/layouts/base.astro";
 import { FeaturedBook } from "../components/elements/featured-book";
@@ -37,7 +37,7 @@ const adsense_2 = adsense?.adsense_slots?.find(
       </div>
       {
         home?.featureBooks && (
-          <BookGrid client:visible books={home?.featureBooks} />
+          <BookGrid client:load books={home?.featureBooks} />
         )
       }
     </div>
@@ -57,7 +57,7 @@ const adsense_2 = adsense?.adsense_slots?.find(
       )
     }
 
-    {categories && <Categories categories={categories} />}
+    <Categories />
 
     {
       adsense_1 && (
@@ -88,11 +88,7 @@ const adsense_2 = adsense?.adsense_slots?.find(
           </a>
         </Button>
       </div>
-      {
-        home?.recentBooks && (
-          <BookGrid client:visible books={home?.recentBooks} />
-        )
-      }
+      {home?.recentBooks && <BookGrid client:load books={home?.recentBooks} />}
     </div>
 
     <div class="mt-12">
@@ -109,7 +105,7 @@ const adsense_2 = adsense?.adsense_slots?.find(
           </a>
         </Button>
       </div>
-      {home?.otherBooks && <BookGrid client:visible books={home?.otherBooks} />}
+      {home?.otherBooks && <BookGrid client:load books={home?.otherBooks} />}
     </div>
   </div>
 </BaseLayout>

@@ -21,7 +21,11 @@ export function FeaturedBook({ book }: { book: BookItem }) {
           <div className="flex flex-wrap gap-2 mb-6">
             {book?.categories?.map((category) => {
               return (
-                <a key={category.slug} href={`/danh-muc/${category.slug}`}>
+                <a
+                  data-astro-prefetch={false}
+                  key={category.slug}
+                  href={`/danh-muc/${category.slug}`}
+                >
                   <Badge
                     variant="secondary"
                     className="bg-slate-700 text-white hover:bg-slate-600"
@@ -34,7 +38,10 @@ export function FeaturedBook({ book }: { book: BookItem }) {
           </div>
           <div className="flex gap-3">
             <Button asChild className="bg-blue-600 hover:bg-blue-700">
-              <a href={`/${book?.slug}/chuong/${1}`}>
+              <a
+                data-astro-prefetch={false}
+                href={`/${book?.slug}/chuong/${1}`}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -58,7 +65,9 @@ export function FeaturedBook({ book }: { book: BookItem }) {
               variant="outline"
               className="bg-grey border-gray-600 text-white "
             >
-              <a href={`/${book?.slug}`}>Xem Chương</a>
+              <a data-astro-prefetch={false} href={`/${book?.slug}`}>
+                Xem Chương
+              </a>
             </Button>
           </div>
         </div>

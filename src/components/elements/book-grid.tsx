@@ -7,7 +7,6 @@ export function BookGrid({ books }: { books: BookItem[] }) {
       {books.map((book, index) => (
         <a
           key={book.slug + "-" + index}
-          // href={`/${book.slug}`}
           onClick={() => {
             window.location.href = `/${book.slug}`;
           }}
