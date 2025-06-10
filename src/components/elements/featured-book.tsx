@@ -8,7 +8,7 @@ export function FeaturedBook({ book }: { book: BookItem }) {
   return (
     <div className="relative rounded-lg overflow-hidden bg-slate-900 dark:bg-slate-800">
       <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-900/50 z-10"></div>
-      <div className="relative z-20 p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-10">
+      <div className="relative z-20 p-6 md:p-8 flex flex-col sm:flex-row md:flex-row gap-6 md:gap-10">
         <div className="flex-1 text-white">
           <Badge className="bg-blue-600 hover:bg-blue-700 mb-4">Nổi Bật</Badge>
           <h1 className="text-3xl md:text-4xl font-bold mb-2">{book.title}</h1>

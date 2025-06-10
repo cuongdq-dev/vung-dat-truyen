@@ -37,7 +37,11 @@ const adsense_2 = adsense?.adsense_slots?.find(
       </div>
       {
         home?.featureBooks && (
-          <BookGrid client:load books={home?.featureBooks} />
+          <BookGrid
+            gridCols={{ default: 2, sm: 6, md: 6, lg: 6 }}
+            client:load
+            books={home?.featureBooks}
+          />
         )
       }
     </div>
@@ -88,7 +92,15 @@ const adsense_2 = adsense?.adsense_slots?.find(
           </a>
         </Button>
       </div>
-      {home?.recentBooks && <BookGrid client:load books={home?.recentBooks} />}
+      {
+        home?.recentBooks && (
+          <BookGrid
+            gridCols={{ default: 2, sm: 6, md: 6, lg: 6 }}
+            client:load
+            books={home?.recentBooks}
+          />
+        )
+      }
     </div>
 
     <div class="mt-12">
@@ -105,7 +117,15 @@ const adsense_2 = adsense?.adsense_slots?.find(
           </a>
         </Button>
       </div>
-      {home?.otherBooks && <BookGrid client:load books={home?.otherBooks} />}
+      {
+        home?.otherBooks && (
+          <BookGrid
+            gridCols={{ default: 2, sm: 6, md: 6, lg: 6 }}
+            client:load
+            books={home?.otherBooks}
+          />
+        )
+      }
     </div>
   </div>
 </BaseLayout>

@@ -1,6 +1,5 @@
 ---
 import { BookOpen, Clock, TableOfContents } from "lucide-react";
-import { BookDetail } from "~/components/elements/book-details";
 import { ChapterList } from "~/components/elements/chapter-list";
 import { Badge } from "~/components/ui/badge";
 import BookCard from "~/components/ui/book-card";
@@ -20,7 +19,6 @@ const recommence = detail?.recommence;
 ---
 
 <BaseLayout>
-  <!-- <BookDetail client:load book={detail?.data} recommence={detail?.recommence} /> -->
   <div class="container px-4 py-2">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
       <div class="md:col-span-1">
@@ -29,6 +27,7 @@ const recommence = detail?.recommence;
             class="relative mx-auto w-[200px] md:w-[250px] aspect-[2/3] rounded-lg overflow-hidden shadow-lg mb-6"
           >
             <ImageCustom
+              client:load
               src={book?.thumbnail?.url}
               alt={book?.thumbnail?.slug}
               className="w-full h-full object-cover"

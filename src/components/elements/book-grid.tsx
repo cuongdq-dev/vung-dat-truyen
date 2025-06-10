@@ -1,9 +1,17 @@
 import { BookOpen } from "lucide-react";
 import { ImageCustom } from "../ui/image";
 // ...existing code...
-export function BookGrid({ books }: { books: BookItem[] }) {
+export function BookGrid({
+  books,
+  gridCols = { default: 2, sm: 6, md: 6, lg: 6 },
+}: {
+  books: BookItem[];
+  gridCols: { default: number; sm: number; md: number; lg: number };
+}) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+    <div
+      className={`grid grid-cols-${gridCols.default} sm:grid-cols-${gridCols.sm} md:grid-cols-${gridCols.md} lg:grid-cols-${gridCols.lg} gap-4 md:gap-6`}
+    >
       {books.map((book, index) => (
         <a
           key={book.slug + "-" + index}
