@@ -1,5 +1,3 @@
-# Mô tả chi tiết về Repository "Vùng Đất Truyện"
-
 ## Mục đích và Chức năng
 
 "Vùng Đất Truyện" là một nền tảng web chuyên dụng để đọc truyện/tiểu thuyết trực tuyến. đọc truyện hiện đại và responsive với các tính năng phong phú cho người dùng.
