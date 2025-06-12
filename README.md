@@ -1,90 +1,118 @@
-# Astro News 📰
+# Mô tả chi tiết về Repository "Vùng Đất Truyện"
 
-A news website built with Astro, designed to provide a modern and responsive news reading experience.
+## Mục đích và Chức năng
 
-> **ℹ️ Info**  
-> Astro news is my first open-source project, so there may be some bugs or issues. I’ll address them as quickly as possible.
+"Vùng Đất Truyện" là một nền tảng web chuyên dụng để đọc truyện/tiểu thuyết trực tuyến. đọc truyện hiện đại và responsive với các tính năng phong phú cho người dùng.
 
-![Astro News](./src/assets/images/screenshot-astronews.png "Astro News")
+![Vùng Đất Truyện](./src/assets/images/screenshot-vungdattruyen.png "Vùng Đất Truyện")
 
 ## 🌐 Demo
 
-Explore the live demo here: [**Live Demo**](https://astro-news-six.vercel.app/)
+Explore the live demo here: [**Live Demo**](https://vungdattruyen.asia/)
 
-## 🚀 Installation
+## Kiến trúc Hệ thống
 
-Follow the steps below to set up and run the project locally:
+### Kiến trúc Frontend
 
-### Clone the Repository
+Dự án được xây dựng trên nền tảng **Astro v5.3.0** kết hợp với **React v19.0.0**, sử dụng mô hình SSG (Static Site Generation) và SSR (Server-Side Rendering).
 
-```bash
-git clone https://github.com/Mrahmani71/astro-news.git
-```
+### Cấu trúc Thư mục
 
-### Install Dependencies
+- **src/pages/**: Quản lý routing với trang chủ, trang chi tiết sách, và trang đọc chương
+- **src/components/**: Chứa các UI components được tổ chức theo modules
+- **src/lib/**: Quản lý logic nghiệp vụ, API, và utilities
 
-```bash
-bun install
-```
+### Hệ thống Cache và Middleware
 
-### Run Development Server
+Ứng dụng triển khai một hệ thống cache thông minh với strategy "stale-while-revalidate" để tối ưu hiệu suất. dụng cho cả dữ liệu API và HTML response với thời gian cache 60 giây.
 
-```bash
-bun dev
-```
+## Các Tính năng Chính
 
-## ✨ Features
+### 1. Trang Chủ và Khám Phá Nội dung
 
-### Implemented Features
+Trang chủ hiển thị các section chính:
 
-- Content Layer
-- Navigation
-- Responsive Design
-- Pagination
-- Search Functionality
-- RSS Feed
-- Sitemap
-- Dark Mode
-- SEO Optimization (~)
+- **Truyện Đề Xuất**: Danh sách các truyện được gợi ý
+- **Mới Cập Nhật**: Các truyện vừa được cập nhật chương mới
+- **Đọc Nhiều Nhất**: Các truyện phổ biến nhất
 
-### Upcoming Features
+### 2. Trang Chi tiết Truyện
 
-- Sharing Options
-- Keystatic Integration
-- Open Graph (OG) Image Generation
+Cung cấp thông tin chi tiết về từng truyện bao gồm:
 
-## 💻 Technologies
+- Ảnh bìa, tiêu đề, tác giả
+- Thông tin trạng thái hoàn thành/đang cập nhật
+- Danh sách chương
+- Tính năng bookmark/lưu truyện
 
-This project leverages cutting-edge web technologies:
+### 3. Trải nghiệm Đọc Truyện
 
-- [Astro V5.0](https://astro.build/) - Modern static site builder
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [DaisyUI](https://daisyui.com/) - Tailwind CSS component library
-- [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript
-- [MDX](https://mdxjs.com/) - Markdown with JSX support
-- [Bun V1.3.8](https://bun.sh/) - Fast JavaScript runtime
-- [Vercel](https://vercel.com/) - Deployment platform
-- [HugeIcons](https://hugeicons.com/) - Icon library
+Trang đọc được tối ưu với:
 
-## 💡  Inspirations and Code Concepts
+- Định dạng prose typography cho trải nghiệm đọc tốt
+- Navigation giữa các chương
+- Sticky header với các nút điều hướng
 
-This project draws inspiration from the following sources:
+### 4. Hệ thống Phân loại và Tìm kiếm
 
-### Designs
+- Phân loại truyện theo thể loại
+- Tích hợp Pagefind cho tính năng tìm kiếm
 
-- [BBC News](https://www.bbc.com)
-- [NewsHub - News Website](https://dribbble.com/shots/21678041-NewsHub-News-Website)
-- [Let'sread - News Landing Page](https://dribbble.com/shots/24675325-Let-sread-News-Landing-Page)
+## Công nghệ Sử dụng
 
-### Articles
+### Frontend Framework và Libraries
 
-- [Creating A Pagination Component With Astro](https://rimdev.io/creating-a-pagination-component-with-astro)
-- [Adding search to static Astro sites](https://website-thomas-astro.vercel.app/blog/search-static-astro-website)
+- **Astro v5.3.0**: Framework chính cho SSG/SSR
+- **React v19.0.0**: Để xây dựng interactive components
+- **TypeScript v5.7.2**: Đảm bảo type safety
 
-## 📄 License
+### Styling và UI
 
-Open sourced under the [MIT license](LICENSE).
+- **Tailwind CSS v3.4.15**: CSS framework chính
+- **DaisyUI v5.0.42**: Component library bổ sung
+- **Radix UI**: Headless components cho accessibility
+- **Lucide React**: Icon library
 
-## 🤝 Contributing
+### SEO và Performance
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/Mrahmani71/astro-news/issues).
+- **Astro Sitemap**: Tự động tạo sitemap
+- **Astro RSS**: Hỗ trợ RSS feeds
+- **Sharp**: Tối ưu hình ảnh
+
+### Utilities và Tools
+
+- **Date-fns và Dayjs**: Xử lý thời gian
+- **Cheerio**: Parse HTML
+- **Reading-time**: Tính toán thời gian đọc
+
+## Tích hợp Backend API
+
+Ứng dụng kết nối với backend API thông qua các environment variables:
+
+- **SITE_API_URL**: URL của backend API
+- **SITE_AUTH_TOKEN**: Token xác thực
+
+### Các API Endpoints chính:
+
+- `/book`: Lấy dữ liệu trang chủ và danh sách truyện
+- `/book/categories`: Lấy danh sách thể loại
+- `/book/adsense`: Quản lý quảng cáo
+
+## Deployment và Production
+
+Dự án được containerized với Docker sử dụng multi-stage build:
+
+- **Stage 1**: Build ứng dụng với Node.js Alpine
+- **Stage 2**: Runtime với image tối ưu
+
+## Data Models
+
+Hệ thống định nghĩa các type chính:
+
+- **BookItem**: Thông tin chi tiết về truyện
+- **Chapter**: Thông tin chương truyện
+- **CategoryItem**: Thông tin thể loại
+
+## Notes
+
+"Vùng Đất Truyện" là một ứng dụng web hiện đại được thiết kế chuyên biệt cho việc đọc truyện trực tuyến, với kiến trúc scalable, tối ưu SEO và trải nghiệm người dùng. Dự án kết hợp khéo léo giữa static generation và server-side rendering để đảm bảo hiệu suất cao và khả năng tương tác tốt.
