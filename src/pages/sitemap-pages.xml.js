@@ -3,8 +3,7 @@ import { SITE } from "../lib/config";
 export async function GET() {
   const pages = [
     { loc: `${SITE.url}/`, priority: "1.0", changefreq: "daily" },
-    // TODO UPDATE
-    // { loc: `${SITE.url}/bai-viet`, priority: "0.9", changefreq: "daily" },
+    { loc: `${SITE.url}/danh-muc`, priority: "0.9", changefreq: "daily" },
   ];
 
   const sitemapContent = pages

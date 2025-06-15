@@ -6,7 +6,6 @@ export async function GET() {
 
   const { perpage, total } = await getSitemapBooks(domain);
   if (!total) return new Response("No books found", { status: 404 });
-
   const totalSitemaps = Math.ceil(total / perpage);
 
   const sitemaps = Array.from(

@@ -1,20 +1,20 @@
 import { BookOpen } from "lucide-react";
 import { ImageCustom } from "../ui/image";
-// ...existing code...
 export function BookGrid({
   books,
-  gridCols = { default: 2, sm: 6, md: 6, lg: 6 },
+  className,
 }: {
   books: BookItem[];
-  gridCols: { default: number; sm: number; md: number; lg: number };
+  className?: string;
 }) {
   return (
     <div
-      className={`grid grid-cols-${gridCols.default} sm:grid-cols-${gridCols.sm} md:grid-cols-${gridCols.md} lg:grid-cols-${gridCols.lg} gap-4 md:gap-6`}
+      className={`grid gap-4 grid-cols-2 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-5 ${className}`}
     >
       {books.map((book, index) => (
         <a
           key={book.slug + "-" + index}
+          href={`/${book.slug}`}
           onClick={() => {
             window.location.href = `/${book.slug}`;
           }}

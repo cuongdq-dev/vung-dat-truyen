@@ -202,10 +202,7 @@ export default function BookCatalogClient({
             </div>
           ) : (
             <>
-              <BookGrid
-                gridCols={{ default: 2, sm: 5, md: 5, lg: 5 }}
-                books={listBooks}
-              />
+              <BookGrid books={listBooks} />
 
               <div className="mt-8">
                 <Pagination

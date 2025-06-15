@@ -19,7 +19,6 @@ const adsense_2 = adsense?.adsense_slots?.find(
 <BaseLayout>
   <div class="container py-4 px-4">
     {home?.top && <FeaturedBook client:load book={home?.top} />}
-    <!-- {home?.recentBooks && <Headlines articles={home?.recentBooks} />} -->
 
     <div class="mt-12">
       <div class="flex items-center justify-between mb-4">
@@ -38,8 +37,7 @@ const adsense_2 = adsense?.adsense_slots?.find(
       {
         home?.featureBooks && (
           <BookGrid
-            gridCols={{ default: 2, sm: 6, md: 6, lg: 6 }}
-            client:load
+            className="grid-cols-2 sm:grid-cols-6 md:grid-cols-6 lg:grid-cols-6"
             books={home?.featureBooks}
           />
         )
@@ -95,8 +93,7 @@ const adsense_2 = adsense?.adsense_slots?.find(
       {
         home?.recentBooks && (
           <BookGrid
-            gridCols={{ default: 2, sm: 6, md: 6, lg: 6 }}
-            client:load
+            className="grid-cols-2 sm:grid-cols-6 md:grid-cols-6 lg:grid-cols-6"
             books={home?.recentBooks}
           />
         )
@@ -120,8 +117,7 @@ const adsense_2 = adsense?.adsense_slots?.find(
       {
         home?.otherBooks && (
           <BookGrid
-            gridCols={{ default: 2, sm: 6, md: 6, lg: 6 }}
-            client:load
+            className="grid-cols-2 sm:grid-cols-6 md:grid-cols-6 lg:grid-cols-6"
             books={home?.otherBooks}
           />
         )

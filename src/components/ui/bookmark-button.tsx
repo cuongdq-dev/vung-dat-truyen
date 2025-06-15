@@ -39,7 +39,7 @@ export function BookmarkButton({
     const unsubscribe = subscribeToBookmarkChanges(checkBookmarkStatus);
 
     return unsubscribe;
-  }, [book.id]);
+  }, [book?.id]);
 
   const toggleBookmark = () => {
     if (bookmarked) {

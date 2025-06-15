@@ -129,24 +129,28 @@ const recommence = detail?.recommence;
           </div>
         </div>
 
-        <div class="tabs">
-          <div class="flex w-full border-b">
-            <button
-              class="flex-1 px-4 py-2 border-b-2 border-primary font-medium"
-              data-tab="chapters"
-            >
-              Danh sách chương
-            </button>
-          </div>
+        {
+          Number(book?.chapters?.length) > 0 && (
+            <div class="tabs">
+              <div class="flex w-full border-b">
+                <button
+                  class="flex-1 px-4 py-2 border-b-2 border-primary font-medium"
+                  data-tab="chapters"
+                >
+                  Danh sách chương
+                </button>
+              </div>
 
-          <div class="tab-content pt-6" id="chapters">
-            <ChapterList
-              client:load
-              bookSlug={book?.slug!}
-              chapters={book?.chapters!}
-            />
-          </div>
-        </div>
+              <div class="tab-content pt-6" id="chapters">
+                <ChapterList
+                  client:load
+                  bookSlug={book?.slug!}
+                  chapters={book?.chapters!}
+                />
+              </div>
+            </div>
+          )
+        }
       </div>
     </div>
     {
@@ -154,7 +158,7 @@ const recommence = detail?.recommence;
         <section>
           <h2 class="text-2xl font-bold mb-6">Truyện Tương Tự</h2>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div class="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-5 gap-4">
             {recommence?.map((book) => {
               return <BookCard book={book} />;
             })}
