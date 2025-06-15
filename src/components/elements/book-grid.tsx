@@ -9,7 +9,7 @@ export function BookGrid({
 }) {
   return (
     <div
-      className={`grid gap-4 grid-cols-2 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-5 ${className}`}
+      className={`grid gap-4 md:gap-6 grid-cols-2 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-5 ${className}`}
     >
       {books.map((book, index) => (
         <a
