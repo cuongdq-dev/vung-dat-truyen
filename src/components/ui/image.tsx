@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const ImageCustom = ({
   src,
@@ -16,14 +16,20 @@ export const ImageCustom = ({
 }) => {
   const [imgSrc, setImgSrc] = useState(src || "/placeholder.svg");
 
+  useEffect(() => {
+    const img = new Image();
+    img.src = src!;
+    img.onerror = () => {
+      setImgSrc("/placeholder.svg");
+    };
+  }, [src]);
   return (
     <img
+      src={imgSrc}
       width={width}
       height={height}
-      src={imgSrc!}
-      alt={alt!}
+      alt={alt || "Image"}
       className={className}
-      onError={() => setImgSrc("/placeholder.svg")}
     />
   );
 };
