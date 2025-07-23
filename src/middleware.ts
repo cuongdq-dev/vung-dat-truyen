@@ -33,10 +33,15 @@ async function getCachedData(
     }
   }
 
-  // Fetch dữ liệu nếu cache hết hạn
-  const data = await fetchFunction();
-  cache.set(key, { data, expires: now + duration, isRefreshing: false });
-  return data;
+  // Cache hết hạn hoặc chưa có cache: fetch mới
+  try {
+    const data = await fetchFunction();
+    cache.set(key, { data, expires: now + duration, isRefreshing: false });
+    return data;
+  } catch (error) {
+    console.error(`[Cache] Fetch failed for ${key}`, error);
+    throw error; // Bắn lỗi ra ngoài để xử lý rõ ràng
+  }
 }
 
 export const onRequest = defineMiddleware(async (context, next) => {
