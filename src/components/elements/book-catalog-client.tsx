@@ -155,12 +155,7 @@ export default function BookCatalogClient({
             onClick={() => {
               setSearchQuery("");
               if (query) {
-                updateUrlParams({
-                  page: 1,
-                  sort: sortBy,
-                  // status: selectedStatus,
-                  // genre: selectedGenres,
-                });
+                updateUrlParams({ page: 1, sort: sortBy });
               }
             }}
           >

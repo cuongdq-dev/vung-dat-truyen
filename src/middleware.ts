@@ -40,13 +40,13 @@ async function getCachedData(
 }
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const url = context.url.pathname;
-
+  const url = context.url.href;
   if (
     url.includes("xml") ||
     url.includes("sitemap") ||
     url.endsWith("robots.txt") ||
-    url.endsWith("ads.txt")
+    url.endsWith("ads.txt") ||
+    url.includes("danh-muc")
   ) {
     return next(); // Không cache, gọi API trực tiếp
   }
